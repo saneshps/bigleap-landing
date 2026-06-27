@@ -249,7 +249,7 @@
             <!-- Top row: brand + description -->
             <div class="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
                 <!-- Left: brand badge -->
-                <div class="text-center sm:text-left">
+                <div class="sm:text-left">
                     <img src="./img/bigleap-clr-logo.png" alt="BigLeap Logo" class="w-100 h-auto">
                     
 
@@ -298,15 +298,7 @@
                     </div>`
                 </div>
                 <!-- End Right: award logos --> 
-
-                <!-- Bottom row: awards -->
-                <div class="mt-14 grid items-center gap-8 border-t border-gray-100 pt-10 lg:grid-cols-2 lg:gap-16">
-                    <!-- Left: label -->
-                    <div class="text-center lg:text-left">
-                        <h3 class="text-xl font-bold text-gray-900 sm:text-2xl">
-                </div>
-
-               
+  
             </div>
 
             
@@ -341,19 +333,19 @@
                 <!-- Right box -->
                 <div class="grid grid-cols-2 gap-4">
                     <div class="flex flex-col items-center justify-center rounded-2xl border border-white/10 bg-white/5 p-6 text-center text-white shadow-lg backdrop-blur-sm sm:p-8">
-                        <span class="text-3xl font-extrabold sm:text-4xl">10+</span>
+                        <span class="count-num text-3xl font-extrabold sm:text-4xl" data-count-to="6" data-suffix="+">0+</span>
                         <span class="mt-2 text-xs text-white/70 sm:text-sm">Years of Experience</span>
                     </div>
                     <div class="flex flex-col items-center justify-center rounded-2xl border border-white/10 bg-white/5 p-6 text-center text-white shadow-lg backdrop-blur-sm sm:p-8">
-                        <span class="text-3xl font-extrabold text-red-400 sm:text-4xl">5,000+</span>
+                        <span class="count-num text-3xl font-extrabold text-red-400 sm:text-4xl" data-count-to="600" data-suffix="+">0+</span>
                         <span class="mt-2 text-xs text-white/70 sm:text-sm">Projects Completed</span>
                     </div>
                     <div class="flex flex-col items-center justify-center rounded-2xl border border-white/10 bg-white/5 p-6 text-center text-white shadow-lg backdrop-blur-sm sm:p-8">
-                        <span class="text-3xl font-extrabold text-red-400 sm:text-4xl">3,500+</span>
+                        <span class="count-num text-3xl font-extrabold text-red-400 sm:text-4xl" data-count-to="800" data-suffix="+">0+</span>
                         <span class="mt-2 text-xs text-white/70 sm:text-sm">UAE Projects</span>
                     </div>
                     <div class="flex flex-col items-center justify-center rounded-2xl border border-white/10 bg-white/5 p-6 text-center text-white shadow-lg backdrop-blur-sm sm:p-8">
-                        <span class="text-3xl font-extrabold sm:text-4xl">98%</span>
+                        <span class="count-num text-3xl font-extrabold sm:text-4xl" data-count-to="100" data-suffix="%">0%</span>
                         <span class="mt-2 text-xs text-white/70 sm:text-sm">Client Satisfaction</span>
                     </div>
                 </div>
@@ -371,6 +363,47 @@
             };
             onScroll();
             window.addEventListener('scroll', onScroll, { passive: true });
+        })();
+
+        // Animated count-up numbers (runs when the section scrolls into view)
+        (function () {
+            const nums = document.querySelectorAll('.count-num');
+            if (!nums.length) return;
+
+            const formatNumber = (n) => n.toLocaleString('en-US');
+
+            const animate = (el) => {
+                const target = parseFloat(el.dataset.countTo) || 0;
+                const suffix = el.dataset.suffix || '';
+                const duration = 2000;
+                const start = performance.now();
+
+                const tick = (now) => {
+                    const progress = Math.min((now - start) / duration, 1);
+                    // easeOutCubic for a smooth finish
+                    const eased = 1 - Math.pow(1 - progress, 3);
+                    const value = Math.round(target * eased);
+                    el.textContent = formatNumber(value) + suffix;
+                    if (progress < 1) requestAnimationFrame(tick);
+                };
+                requestAnimationFrame(tick);
+            };
+
+            if (!('IntersectionObserver' in window)) {
+                nums.forEach(animate);
+                return;
+            }
+
+            const observer = new IntersectionObserver((entries, obs) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        animate(entry.target);
+                        obs.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.4 });
+
+            nums.forEach((el) => observer.observe(el));
         })();
     </script>
 </body>
