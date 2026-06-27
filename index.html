@@ -89,6 +89,64 @@
             width: 26px;
             background: linear-gradient(to right, #f97316, #ef4444);
         }
+
+        /* ---- Portfolio / Industries section ---- */
+        .portfolio-bg {
+            background-color: #0d0809;
+            background-image:
+                radial-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+                linear-gradient(160deg, #140d0e 0%, #1c0d10 55%, #2b0e10 100%);
+            background-size: 22px 22px, 100% 100%;
+        }
+
+        /* squircle thumbnail */
+        .ind-thumb {
+            position: relative;
+            border-radius: 40px 0px 40px 0px;
+            overflow: hidden;
+            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.5s ease;
+        }
+        .ind-card:hover .ind-thumb {
+            transform: translateY(-8px) scale(1.04);
+            box-shadow: 0 22px 45px -12px rgba(239, 68, 68, 0.55),
+                        0 0 32px -6px rgba(249, 115, 22, 0.55);
+        }
+        /* glowing gradient ring behind thumb on hover */
+        .ind-thumb::after {
+            content: "";
+            position: absolute;
+            inset: -3px;
+            border-radius: inherit;
+            padding: 3px;
+            background: linear-gradient(135deg, #f97316, #ef4444);
+            -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+            -webkit-mask-composite: xor;
+            mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+            mask-composite: exclude;
+            opacity: 0;
+            transition: opacity 0.45s ease;
+            z-index: 2;
+        }
+        .ind-card:hover .ind-thumb::after { opacity: 1; }
+
+        .ind-thumb img { transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1); }
+        .ind-card:hover .ind-thumb img { transform: scale(1.12); }
+
+        .ind-card .ind-label { transition: color 0.3s ease; }
+        .ind-card:hover .ind-label { color: #fb923c; }
+
+        /* scroll reveal */
+        .ind-item {
+            opacity: 0;
+            transform: translateY(36px) scale(0.96);
+            transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .ind-item.in-view { opacity: 1; transform: translateY(0) scale(1); }
+
+        @media (prefers-reduced-motion: reduce) {
+            .ind-item { opacity: 1; transform: none; transition: none; }
+            .ind-card:hover .ind-thumb { transform: none; }
+        }
     </style>
 </head>
 
@@ -482,12 +540,32 @@
      </section>
      <!-- Our End-services section -->
       
-      <!-- Our portfolio section -->
-      <section class="bg-white py-14 sm:py-20">
-        <div class="container mx-auto px-4 sm:px-6">
-            <div class="max-w-4xl mx-auto text-center">
-                <h2 class="text-3xl font-bold text-gray-800">Our Portfolio</h2>
+      <!-- Our portfolio / industries section -->
+      <section id="portfolio" class="portfolio-bg relative overflow-hidden py-16 sm:py-24">
+        <!-- decorative glows -->
+        <div class="pointer-events-none absolute -left-24 top-10 h-72 w-72 rounded-full bg-orange-600/20 blur-3xl"></div>
+        <div class="pointer-events-none absolute -right-20 top-1/3 h-80 w-80 rounded-full bg-red-600/20 blur-3xl"></div>
+        <div class="pointer-events-none absolute bottom-0 left-1/3 h-72 w-72 rounded-full bg-orange-500/10 blur-3xl"></div>
+
+        <div class="container relative mx-auto px-4 sm:px-6">
+            <!-- Heading -->
+            <div class="mx-auto mb-12 max-w-3xl text-center sm:mb-16">
+                <span class="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.2em] text-orange-400 backdrop-blur-sm sm:text-sm">
+                    Creative For Your Industry
+                </span>
+                <h2 class="mt-5 text-3xl font-extrabold uppercase leading-tight text-white sm:text-4xl lg:text-5xl">
+                    3D For Every
+                    <span class="bg-gradient-to-r from-orange-400 to-red-500 bg-clip-text text-transparent">Industry</span>
+                </h2>
+                <p class="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-white/70 sm:text-base">
+                    Whether you need a fully managed production team or direct access to specialist talent,
+                    our platform combines experienced producers with a global network of vetted creatives.
+                    We assemble the right team for your project and deliver on-time and on-budget.
+                </p>
             </div>
+
+            <!-- Industries grid -->
+            <div id="indGrid" class="grid grid-cols-2 gap-6 sm:grid-cols-3 sm:gap-8 lg:grid-cols-6"></div>
         </div>
      </section>
      <!-- Our End-portfolio section -->  
@@ -567,39 +645,38 @@
                 {
                     title: '2D Animation',
                     text: 'Thinking of incorporating 2D animation into your marketing strategy? We are the trusted 2D animation company in Dubai.',
-                    img: 'img/service-2d-animation.png'
+                    img: 'img/services/2D-animation.webp'
                 },
                 {
                     title: '3D Animation',
                     text: 'Ready to unfold your story in motion? Elevate your brand with realistic and immersive 3D animation that will bring your vision to life.',
-                    img: 'https://picsum.photos/seed/bigleap3d/640/480'
+                    img: 'img/services/3D.webp'
                 },
                 {
                     title: 'Product Animation',
                     text: 'Want to showcase your product in a way that will capture your audience? We help you create compelling product animations.',
-                    img: 'https://picsum.photos/seed/bigleapmotion/640/480'
+                    img: 'img/services/product.webp'
                 },
                 {
                     title: 'Character Design',
                     text: 'Bring your characters to life with expert character designing and rigging. We turn concepts into reality, animating characters to motion.',
-                    img: 'https://picsum.photos/seed/bigleapchar/640/480'
+                    img: 'img/services/Character-design.webp'
                 },
                 {
-                    title: 'Explainer Videos',
-                    text: 'Simplify your product or service with concise explainer videos designed to convert viewers into customers.',
-                    img: 'https://picsum.photos/seed/bigleapexplain/640/480'
-                },
-              
-                {
-                    title: 'Whiteboard Animation',
-                    text: 'Hand-drawn whiteboard animations that make learning and storytelling fun, simple, and effective.',
-                    img: 'https://picsum.photos/seed/bigleapwhite/640/480'
+                    title: '2D Animation',
+                    text: 'Thinking of incorporating 2D animation into your marketing strategy? We are the trusted 2D animation company in Dubai.',
+                    img: 'img/services/2D-animation.webp'
                 },
                 {
-                    title: 'Logo Animation',
-                    text: 'Make a powerful first impression with sleek, dynamic logo animations tailored to your identity.',
-                    img: 'https://picsum.photos/seed/bigleaplogo/640/480'
-                }
+                    title: '3D Animation',
+                    text: 'Ready to unfold your story in motion? Elevate your brand with realistic and immersive 3D animation that will bring your vision to life.',
+                    img: 'img/services/3D.webp'
+                },
+                {
+                    title: 'Product Animation',
+                    text: 'Want to showcase your product in a way that will capture your audience? We help you create compelling product animations.',
+                    img: 'img/services/product.webp'
+                } 
             ];
 
             // Build slides
@@ -723,6 +800,50 @@
             buildDots();
             layout();
             startAuto();
+        })();
+
+        // ---- Industries row (squircle thumbnails + scroll reveal) ----
+        (function () {
+            const grid = document.getElementById('indGrid');
+            if (!grid) return;
+
+            // Industries — swap images/labels freely.
+            const industries = [
+                { label: 'Architecture', img: 'img/industry/Architecture.webp' },
+                { label: 'Automotive', img: 'img/industry/Automotive.webp' },
+                { label: 'Fashion', img: 'img/industry/Fashion.webp' },
+                { label: 'Film & TV', img: 'img/industry/Film-and-TV.webp' },
+                { label: 'Games', img: 'img/industry/Games.webp' },
+                { label: 'Retail', img: 'img/industry/Retail.webp' }
+            ];
+
+            grid.innerHTML = industries.map((it) => `
+                <div class="ind-item">
+                    <a href="#contact" class="ind-card group flex flex-col items-center text-center">
+                        <div class="ind-thumb aspect-square w-full ring-1 ring-white/10">
+                            <img src="${it.img}" alt="${it.label}" loading="lazy" class="h-full w-full object-cover" />
+                        </div>
+                        <h3 class="ind-label mt-4 text-sm font-bold text-white sm:text-base">${it.label}</h3>
+                    </a>
+                </div>
+            `).join('');
+
+            const items = Array.from(grid.querySelectorAll('.ind-item'));
+            const reveal = () => {
+                items.forEach((el, i) => {
+                    el.style.transitionDelay = (i * 0.09) + 's';
+                    el.classList.add('in-view');
+                });
+            };
+
+            if ('IntersectionObserver' in window) {
+                const io = new IntersectionObserver((entries, obs) => {
+                    if (entries.some((e) => e.isIntersecting)) { reveal(); obs.disconnect(); }
+                }, { threshold: 0.15 });
+                io.observe(grid);
+            } else {
+                reveal();
+            }
         })();
     </script>
 </body>
