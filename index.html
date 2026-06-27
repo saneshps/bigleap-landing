@@ -61,6 +61,34 @@
         .stat-card:hover::before {
             transform: scaleX(1);
         }
+
+        /* ---- Service slider ---- */
+        .service-viewport { cursor: grab; }
+        .service-viewport.is-dragging { cursor: grabbing; }
+        .service-viewport.is-dragging #serviceTrack { transition: none; }
+
+        .service-card {
+            background:
+                radial-gradient(120% 80% at 50% -10%, #3a1416 0%, transparent 55%),
+                linear-gradient(160deg, #1c1416 0%, #140d0e 100%);
+        }
+        /* maroon corner accents (top-left & top-right) like the reference card */
+ 
+        .service-card::before { left: 22px; border-radius: 0 0 8px 8px; transform: skewX(-12deg); }
+        .service-card::after  { right: 22px; border-radius: 0 0 8px 8px; transform: skewX(12deg); }
+
+        .service-card .card-img { transition: transform 0.6s ease; }
+        .service-card:hover .card-img { transform: scale(1.07); }
+
+        /* dot pagination */
+        .slider-dot {
+            height: 8px; width: 8px; border-radius: 9999px;
+            background: #e5e7eb; transition: all 0.3s ease;
+        }
+        .slider-dot.active {
+            width: 26px;
+            background: linear-gradient(to right, #f97316, #ef4444);
+        }
     </style>
 </head>
 
@@ -406,7 +434,63 @@
         </div>
      </section>
     <!-- Our End-Count section -->
+     <!-- Our services section -->
+     <section class="bg-white py-14 sm:py-20">
+        <div class="container mx-auto px-4 sm:px-6">
+            <!-- Heading -->
+            <div class="mx-auto mb-10 max-w-2xl text-center sm:mb-14">
+                <span class="inline-block text-xs font-semibold uppercase tracking-widest text-red-500 sm:text-sm">
+                    What We Offer
+                </span>
+                <h2 class="mt-3 text-3xl font-extrabold leading-tight text-gray-900 sm:text-4xl lg:text-5xl">
+                    Our Creative
+                    <span class="bg-gradient-to-r from-orange-500 to-red-500 bg-clip-text text-transparent">Services</span>
+                </h2>
+                <p class="mx-auto mt-4 max-w-xl text-sm leading-relaxed text-gray-500 sm:text-base">
+                    From 2D &amp; 3D animation to motion graphics, we craft stories that captivate
+                    audiences and elevate your brand.
+                </p>
+            </div>
 
+            <!-- Slider -->
+            <div id="serviceSlider" class="relative">
+                <!-- viewport -->
+                <div class="service-viewport overflow-hidden">
+                    <div id="serviceTrack" class="flex transition-transform duration-500 ease-out">
+                        <!-- slides injected by JS -->
+                    </div>
+                </div>
+
+                <!-- Arrows -->
+                <button type="button" data-slider-prev aria-label="Previous services"
+                    class="group absolute -left-2 top-[38%] z-10 hidden h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-gray-200 bg-white text-gray-700 shadow-lg transition-all duration-300 hover:-translate-y-1/2 hover:scale-105 hover:border-red-300 hover:text-red-500 disabled:cursor-not-allowed disabled:opacity-40 sm:flex lg:-left-5">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+                    </svg>
+                </button>
+                <button type="button" data-slider-next aria-label="Next services"
+                    class="group absolute -right-2 top-[38%] z-10 hidden h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-gray-200 bg-white text-gray-700 shadow-lg transition-all duration-300 hover:-translate-y-1/2 hover:scale-105 hover:border-red-300 hover:text-red-500 disabled:cursor-not-allowed disabled:opacity-40 sm:flex lg:-right-5">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Dots -->
+            <div id="serviceDots" class="mt-8 flex flex-wrap items-center justify-center gap-2"></div>
+        </div>
+     </section>
+     <!-- Our End-services section -->
+      
+      <!-- Our portfolio section -->
+      <section class="bg-white py-14 sm:py-20">
+        <div class="container mx-auto px-4 sm:px-6">
+            <div class="max-w-4xl mx-auto text-center">
+                <h2 class="text-3xl font-bold text-gray-800">Our Portfolio</h2>
+            </div>
+        </div>
+     </section>
+     <!-- Our End-portfolio section -->  
     <script>
         (function () {
             const header = document.getElementById('siteHeader');
@@ -465,6 +549,180 @@
             }, { threshold: 0.4 });
 
             nums.forEach((el) => observer.observe(el));
+        })();
+
+        // ---- Services slider (dependency-free, responsive, swipe + autoplay) ----
+        (function () {
+            const root = document.getElementById('serviceSlider');
+            const track = document.getElementById('serviceTrack');
+            const dotsWrap = document.getElementById('serviceDots');
+            if (!root || !track || !dotsWrap) return;
+
+            const prevBtn = root.querySelector('[data-slider-prev]');
+            const nextBtn = root.querySelector('[data-slider-next]');
+            const viewport = root.querySelector('.service-viewport');
+
+            // Service data — swap images/text freely.
+            const services = [
+                {
+                    title: '2D Animation',
+                    text: 'Thinking of incorporating 2D animation into your marketing strategy? We are the trusted 2D animation company in Dubai.',
+                    img: 'img/service-2d-animation.png'
+                },
+                {
+                    title: '3D Animation',
+                    text: 'Ready to unfold your story in motion? Elevate your brand with realistic and immersive 3D animation that will bring your vision to life.',
+                    img: 'https://picsum.photos/seed/bigleap3d/640/480'
+                },
+                {
+                    title: 'Product Animation',
+                    text: 'Want to showcase your product in a way that will capture your audience? We help you create compelling product animations.',
+                    img: 'https://picsum.photos/seed/bigleapmotion/640/480'
+                },
+                {
+                    title: 'Character Design',
+                    text: 'Bring your characters to life with expert character designing and rigging. We turn concepts into reality, animating characters to motion.',
+                    img: 'https://picsum.photos/seed/bigleapchar/640/480'
+                },
+                {
+                    title: 'Explainer Videos',
+                    text: 'Simplify your product or service with concise explainer videos designed to convert viewers into customers.',
+                    img: 'https://picsum.photos/seed/bigleapexplain/640/480'
+                },
+              
+                {
+                    title: 'Whiteboard Animation',
+                    text: 'Hand-drawn whiteboard animations that make learning and storytelling fun, simple, and effective.',
+                    img: 'https://picsum.photos/seed/bigleapwhite/640/480'
+                },
+                {
+                    title: 'Logo Animation',
+                    text: 'Make a powerful first impression with sleek, dynamic logo animations tailored to your identity.',
+                    img: 'https://picsum.photos/seed/bigleaplogo/640/480'
+                }
+            ];
+
+            // Build slides
+            track.innerHTML = services.map((s) => `
+                <div class="slide shrink-0 px-2 sm:px-3" role="group">
+                    <article class="service-card group relative h-full overflow-hidden rounded-3xl p-3 shadow-xl ring-1 ring-white/5 transition-transform duration-300 hover:-translate-y-1.5">
+                        <div class="relative overflow-hidden rounded-2xl">
+                            <img src="${s.img}" alt="${s.title}" loading="lazy"
+                                class="card-img aspect-[4/3] w-full object-cover" />
+                        </div>
+                        <div class="px-2 pb-3 pt-4 text-center">
+                            <h3 class="text-lg font-bold text-white sm:text-xl">${s.title}</h3>
+                            <p class="mt-2 text-sm leading-relaxed text-white/70">${s.text}</p>
+                        </div>
+                    </article>
+                </div>
+            `).join('');
+
+            const slides = Array.from(track.children);
+
+            const perView = () => {
+                const w = window.innerWidth;
+                if (w >= 1280) return 4;
+                if (w >= 1024) return 3;
+                if (w >= 640) return 2;
+                return 1;
+            };
+
+            let index = 0;
+            let pv = perView();
+
+            const maxIndex = () => Math.max(0, slides.length - pv);
+
+            const layout = () => {
+                pv = perView();
+                slides.forEach((s) => { s.style.width = (100 / pv) + '%'; });
+                index = Math.min(index, maxIndex());
+                update();
+            };
+
+            const buildDots = () => {
+                dotsWrap.innerHTML = '';
+                const count = maxIndex() + 1;
+                for (let i = 0; i < count; i++) {
+                    const b = document.createElement('button');
+                    b.type = 'button';
+                    b.className = 'slider-dot';
+                    b.setAttribute('aria-label', 'Go to slide ' + (i + 1));
+                    b.addEventListener('click', () => { index = i; update(); restartAuto(); });
+                    dotsWrap.appendChild(b);
+                }
+            };
+
+            const update = () => {
+                track.style.transform = `translateX(-${index * (100 / pv)}%)`;
+                Array.from(dotsWrap.children).forEach((d, i) => d.classList.toggle('active', i === index));
+                if (prevBtn) prevBtn.disabled = index === 0;
+                if (nextBtn) nextBtn.disabled = index >= maxIndex();
+            };
+
+            const go = (dir) => {
+                index = Math.min(Math.max(index + dir, 0), maxIndex());
+                update();
+            };
+
+            prevBtn && prevBtn.addEventListener('click', () => { go(-1); restartAuto(); });
+            nextBtn && nextBtn.addEventListener('click', () => { go(1); restartAuto(); });
+
+            // Autoplay (loops back to start), paused on hover/focus/touch
+            let timer = null;
+            const AUTO_MS = 4500;
+            const startAuto = () => {
+                stopAuto();
+                timer = setInterval(() => {
+                    index = index >= maxIndex() ? 0 : index + 1;
+                    update();
+                }, AUTO_MS);
+            };
+            const stopAuto = () => { if (timer) { clearInterval(timer); timer = null; } };
+            const restartAuto = () => { startAuto(); };
+
+            root.addEventListener('mouseenter', stopAuto);
+            root.addEventListener('mouseleave', startAuto);
+            root.addEventListener('focusin', stopAuto);
+            root.addEventListener('focusout', startAuto);
+
+            // Drag / swipe support
+            let startX = 0, deltaX = 0, dragging = false;
+            const onDown = (x) => { dragging = true; startX = x; deltaX = 0; viewport.classList.add('is-dragging'); stopAuto(); };
+            const onMove = (x) => {
+                if (!dragging) return;
+                deltaX = x - startX;
+                const slideW = viewport.offsetWidth / pv;
+                const pct = (deltaX / viewport.offsetWidth) * 100;
+                track.style.transform = `translateX(calc(-${index * (100 / pv)}% + ${pct}%))`;
+            };
+            const onUp = () => {
+                if (!dragging) return;
+                dragging = false;
+                viewport.classList.remove('is-dragging');
+                const threshold = viewport.offsetWidth / pv / 4;
+                if (deltaX > threshold) go(-1);
+                else if (deltaX < -threshold) go(1);
+                else update();
+                startAuto();
+            };
+
+            viewport.addEventListener('mousedown', (e) => { onDown(e.clientX); });
+            window.addEventListener('mousemove', (e) => onMove(e.clientX));
+            window.addEventListener('mouseup', onUp);
+
+            viewport.addEventListener('touchstart', (e) => onDown(e.touches[0].clientX), { passive: true });
+            viewport.addEventListener('touchmove', (e) => onMove(e.touches[0].clientX), { passive: true });
+            viewport.addEventListener('touchend', onUp);
+
+            // prevent ghost click after drag
+            track.addEventListener('click', (e) => { if (Math.abs(deltaX) > 5) e.preventDefault(); }, true);
+
+            window.addEventListener('resize', () => { buildDots(); layout(); });
+
+            buildDots();
+            layout();
+            startAuto();
         })();
     </script>
 </body>
