@@ -378,15 +378,23 @@
                 const duration = 2000;
                 const start = performance.now();
 
+                // cancel any in-flight animation before starting a new one
+                if (el._countRAF) cancelAnimationFrame(el._countRAF);
+
                 const tick = (now) => {
                     const progress = Math.min((now - start) / duration, 1);
                     // easeOutCubic for a smooth finish
                     const eased = 1 - Math.pow(1 - progress, 3);
                     const value = Math.round(target * eased);
                     el.textContent = formatNumber(value) + suffix;
-                    if (progress < 1) requestAnimationFrame(tick);
+                    if (progress < 1) el._countRAF = requestAnimationFrame(tick);
                 };
-                requestAnimationFrame(tick);
+                el._countRAF = requestAnimationFrame(tick);
+            };
+
+            const reset = (el) => {
+                if (el._countRAF) cancelAnimationFrame(el._countRAF);
+                el.textContent = '0' + (el.dataset.suffix || '');
             };
 
             if (!('IntersectionObserver' in window)) {
@@ -394,11 +402,12 @@
                 return;
             }
 
-            const observer = new IntersectionObserver((entries, obs) => {
+            const observer = new IntersectionObserver((entries) => {
                 entries.forEach((entry) => {
                     if (entry.isIntersecting) {
                         animate(entry.target);
-                        obs.unobserve(entry.target);
+                    } else {
+                        reset(entry.target);
                     }
                 });
             }, { threshold: 0.4 });
