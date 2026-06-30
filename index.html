@@ -674,12 +674,45 @@
             </div>
 
             <!-- Industries grid -->
-            <div id="indGrid" class="grid grid-cols-2 gap-6 sm:grid-cols-3 sm:gap-8 lg:grid-cols-4"></div>
+            <div id="indGrid" class="flex flex-wrap justify-center gap-6 sm:gap-8"></div>
         </div>
      </section>
      <!-- Our End-portfolio section -->  
 
+<!-- Main offers Section -->
+ <section id="offers" class="offers-bg relative overflow-hidden py-16 sm:py-24">
+    <div class="container relative mx-auto px-4 sm:px-6">
+        <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 lg:grid-cols-2">
+            <div class="offer-item offer-image">
+                <img src="./img/About-us-ninja .webp" alt="Offer 1">
+            </div>
+            <div class="offer-item offer-content">
+                <h2 class="offer-title"> Animation Studio </h2>
+                <p class="offer-description"> Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+                    Sequi eos doloremque labore tenetur eius ipsum et. Soluta consequuntur sunt placeat
+                     suscipit non mollitia tempora, odit, autem reprehenderit neque ut aperiam.
+                </p>
 
+                <h4> <i class="fa-solid fa-play"></i> Free demo video </h4>
+                <p class="offer-description"> Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+                    Sequi eos doloremque labore tenetur eius ipsum et. Soluta consequuntur sunt placeat
+                     suscipit non mollitia tempora, odit, autem reprehenderit neque ut aperiam.
+                </p>
+                <h4> <i class="fa-solid fa-gear"></i> 100% customization </h4>
+                <p class="offer-description"> Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+                    Sequi eos doloremque labore tenetur eius ipsum et. Soluta consequuntur sunt placeat
+                     suscipit non mollitia tempora, odit, autem reprehenderit neque ut aperiam.
+                </p>
+                <h4> <i class="fa-solid fa-headset"></i> 24/7 Support </h4>
+                <p class="offer-description"> Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+                    Sequi eos doloremque labore tenetur eius ipsum et. Soluta consequuntur sunt placeat
+                     suscipit non mollitia tempora, odit, autem reprehenderit neque ut aperiam.
+                </p>
+            </div>
+        </div>
+    </div>
+ </section>
+<!-- Main offers Section -->
 
      <!-- Footer section -->
        <!-- Footer -->
@@ -1081,7 +1114,7 @@
             ];
 
             grid.innerHTML = industries.map((it) => `
-                <div class="ind-item">
+                <div class="ind-item w-[calc(50%-0.75rem)] sm:w-[calc(33.333%-1.334rem)] lg:w-[calc(25%-1.5rem)]">
                     <a href="#contact" class="ind-card group flex flex-col items-center text-center">
                         <div class="ind-thumb aspect-square w-full ring-1 ring-white/10">
                             <img src="${it.img}" alt="${it.label}" loading="lazy" class="h-full w-full object-cover" />
