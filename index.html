@@ -256,6 +256,231 @@
             border-radius: 9999px;
             background: linear-gradient(to right, #f97316, #ef4444);
         }
+
+        /* ---- Offers / Benefits section ---- */
+        .offers-bg {
+            position: relative;
+            background-color: #0c0708;
+            background-image:
+                radial-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+                linear-gradient(160deg, #140d0e 0%, #1c0d10 55%, #2b0e10 100%);
+            background-size: 22px 22px, 100% 100%;
+        }
+        /* ambient glow blobs */
+        .offers-bg::before,
+        .offers-bg::after {
+            content: "";
+            position: absolute;
+            border-radius: 9999px;
+            filter: blur(110px);
+            opacity: 0.45;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .offers-bg::before {
+            width: 360px; height: 360px;
+            top: -120px; right: -80px;
+            background: radial-gradient(circle, rgba(249, 115, 22, 0.5), transparent 70%);
+        }
+        .offers-bg::after {
+            width: 420px; height: 420px;
+            bottom: -160px; left: -120px;
+            background: radial-gradient(circle, rgba(239, 68, 68, 0.45), transparent 70%);
+        }
+
+        /* kicker label */
+        .offer-kicker {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 14px;
+            border-radius: 9999px;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: #fdba74;
+            border: 1px solid rgba(249, 115, 22, 0.35);
+            background: rgba(249, 115, 22, 0.08);
+        }
+        .offer-kicker::before {
+            content: "";
+            height: 7px; width: 7px;
+            border-radius: 9999px;
+            background: linear-gradient(135deg, #f97316, #ef4444);
+            box-shadow: 0 0 10px 1px rgba(249, 115, 22, 0.8);
+        }
+
+        .offer-title {
+            font-family: 'Suez One', serif;
+            color: #fff;
+            font-size: clamp(1.9rem, 4.5vw, 3rem);
+            line-height: 1.1;
+            margin-top: 18px;
+        }
+        .offer-title .grad {
+            background: linear-gradient(to right, #f97316, #ef4444);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .offer-lead {
+            margin-top: 16px;
+            color: #b9adae;
+            font-size: 0.98rem;
+            line-height: 1.7;
+            max-width: 34rem;
+        }
+
+        /* feature list */
+        .offer-features {
+            margin-top: 30px;
+            display: grid;
+            gap: 14px;
+        }
+        .offer-feature {
+            position: relative;
+            display: flex;
+            gap: 16px;
+            padding: 18px;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: linear-gradient(160deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%);
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                        border-color 0.4s ease, box-shadow 0.4s ease, background 0.4s ease;
+            overflow: hidden;
+        }
+        .offer-feature::before {
+            content: "";
+            position: absolute;
+            inset: 0 auto 0 0;
+            width: 3px;
+            background: linear-gradient(to bottom, #f97316, #ef4444);
+            transform: scaleY(0);
+            transform-origin: top;
+            transition: transform 0.4s ease;
+        }
+        .offer-feature:hover {
+            transform: translateX(6px);
+            border-color: rgba(249, 115, 22, 0.4);
+            background: linear-gradient(160deg, rgba(249,115,22,0.10) 0%, rgba(239,68,68,0.04) 100%);
+            box-shadow: 0 18px 40px -18px rgba(239, 68, 68, 0.55);
+        }
+        .offer-feature:hover::before { transform: scaleY(1); }
+
+        .offer-feature-ico {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            height: 48px; width: 48px;
+            flex-shrink: 0;
+            border-radius: 14px;
+            font-size: 1.15rem;
+            color: #fff;
+            background: linear-gradient(135deg, #f97316, #ef4444);
+            box-shadow: 0 10px 24px -8px rgba(239, 68, 68, 0.7);
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .offer-feature:hover .offer-feature-ico { transform: scale(1.08) rotate(-4deg); }
+
+        .offer-feature h4 {
+            color: #fff;
+            font-size: 1.02rem;
+            font-weight: 600;
+        }
+        .offer-feature p {
+            margin-top: 5px;
+            color: #b0a4a5;
+            font-size: 0.875rem;
+            line-height: 1.6;
+        }
+
+        /* image card */
+        .offer-visual {
+            position: relative;
+            border-radius: 24px;
+            overflow: hidden;
+            background:
+                radial-gradient(120% 90% at 50% -10%, #3a1416 0%, transparent 55%),
+                linear-gradient(160deg, #1c1416 0%, #140d0e 100%);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 40px 80px -30px rgba(0, 0, 0, 0.9);
+        }
+        /* gradient ring */
+        .offer-visual::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            padding: 1.5px;
+            background: linear-gradient(135deg, rgba(249,115,22,0.6), transparent 45%, rgba(239,68,68,0.6));
+            -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+            -webkit-mask-composite: xor;
+            mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+            mask-composite: exclude;
+            pointer-events: none;
+        }
+        .offer-visual img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            animation: offerFloat 6s ease-in-out infinite;
+        }
+        @keyframes offerFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-14px); }
+        }
+        /* floating stat badge */
+        .offer-badge {
+            position: absolute;
+            left: 22px; bottom: 22px;
+            z-index: 3;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 18px;
+            border-radius: 16px;
+            color: #fff;
+            background: rgba(20, 13, 14, 0.75);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 18px 40px -16px rgba(0, 0, 0, 0.8);
+        }
+        .offer-badge .num {
+            font-family: 'Suez One', serif;
+            font-size: 1.5rem;
+            line-height: 1;
+            background: linear-gradient(to right, #f97316, #ef4444);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .offer-badge .lbl {
+            font-size: 0.72rem;
+            color: #cbbfc0;
+            line-height: 1.25;
+        }
+
+        /* scroll reveal */
+        .offer-reveal {
+            opacity: 0;
+            transform: translateY(36px);
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+                        transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .offer-reveal.in-view { opacity: 1; transform: translateY(0); }
+
+        @media (prefers-reduced-motion: reduce) {
+            .offer-reveal { opacity: 1; transform: none; transition: none; }
+            .offer-visual img { animation: none; }
+        }
+
+        @media (max-width: 640px) {
+            .offer-badge { left: 14px; bottom: 14px; padding: 10px 14px; }
+            .offer-feature { padding: 15px; gap: 13px; }
+            .offer-feature-ico { height: 44px; width: 44px; }
+        }
     </style>
 </head>
 
@@ -681,34 +906,60 @@
 
 <!-- Main offers Section -->
  <section id="offers" class="offers-bg relative overflow-hidden py-16 sm:py-24">
-    <div class="container relative mx-auto px-4 sm:px-6">
-        <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 lg:grid-cols-2">
-            <div class="offer-item offer-image">
-                <img src="./img/About-us-ninja .webp" alt="Offer 1">
-            </div>
-            <div class="offer-item offer-content">
-                <h2 class="offer-title"> Animation Studio </h2>
-                <p class="offer-description"> Lorem ipsum dolor sit amet consectetur adipisicing elit. 
-                    Sequi eos doloremque labore tenetur eius ipsum et. Soluta consequuntur sunt placeat
-                     suscipit non mollitia tempora, odit, autem reprehenderit neque ut aperiam.
+    <div class="container relative z-10 mx-auto px-4 sm:px-6">
+        <div class="grid grid-cols-1 items-center gap-10 lg:grid-cols-2 lg:gap-16">
+
+            <!-- Content -->
+            <div class="offer-reveal order-2 lg:order-1">
+                <span class="offer-kicker">Why partner with us</span>
+                <h2 class="offer-title">
+                    Premier Video <br class="hidden sm:block">
+                    <span class="grad">Animation Studio</span>
+                </h2>
+                <p class="offer-lead">
+                    While you can find plenty of video animators out there, very few can deliver
+                    the same convenience, flexibility, and craft we bring to every single project.
                 </p>
 
-                <h4> <i class="fa-solid fa-play"></i> Free demo video </h4>
-                <p class="offer-description"> Lorem ipsum dolor sit amet consectetur adipisicing elit. 
-                    Sequi eos doloremque labore tenetur eius ipsum et. Soluta consequuntur sunt placeat
-                     suscipit non mollitia tempora, odit, autem reprehenderit neque ut aperiam.
-                </p>
-                <h4> <i class="fa-solid fa-gear"></i> 100% customization </h4>
-                <p class="offer-description"> Lorem ipsum dolor sit amet consectetur adipisicing elit. 
-                    Sequi eos doloremque labore tenetur eius ipsum et. Soluta consequuntur sunt placeat
-                     suscipit non mollitia tempora, odit, autem reprehenderit neque ut aperiam.
-                </p>
-                <h4> <i class="fa-solid fa-headset"></i> 24/7 Support </h4>
-                <p class="offer-description"> Lorem ipsum dolor sit amet consectetur adipisicing elit. 
-                    Sequi eos doloremque labore tenetur eius ipsum et. Soluta consequuntur sunt placeat
-                     suscipit non mollitia tempora, odit, autem reprehenderit neque ut aperiam.
-                </p>
+                <div class="offer-features">
+                    <div class="offer-feature">
+                        <span class="offer-feature-ico"><i class="fa-solid fa-play"></i></span>
+                        <div>
+                            <h4>Free Demo Video</h4>
+                            <p>See your idea come to life first. We craft a free demo so you know
+                               exactly what to expect before committing.</p>
+                        </div>
+                    </div>
+                    <div class="offer-feature">
+                        <span class="offer-feature-ico"><i class="fa-solid fa-gear"></i></span>
+                        <div>
+                            <h4>100% Customization</h4>
+                            <p>From ideation to final cut, you stay in full control. Our team
+                               seeks your feedback at every stage of production.</p>
+                        </div>
+                    </div>
+                    <div class="offer-feature">
+                        <span class="offer-feature-ico"><i class="fa-solid fa-headset"></i></span>
+                        <div>
+                            <h4>24/7 Support</h4>
+                            <p>Whether it's a product launch or a quick question, our support
+                               team is ready to assist you around the clock.</p>
+                        </div>
+                    </div>
+                </div>
             </div>
+
+            <!-- Visual -->
+            <div class="offer-reveal order-1 lg:order-2">
+                <div class="offer-visual aspect-[4/5] sm:aspect-square lg:aspect-[4/5]">
+                    <img src="./img/About-us-ninja .webp" alt="BigLeap animation studio character" loading="lazy">
+                    <div class="offer-badge">
+                        <span class="num">10+</span>
+                        <span class="lbl">Years of<br>creative magic</span>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
  </section>
@@ -1137,6 +1388,26 @@
                     if (entries.some((e) => e.isIntersecting)) { reveal(); obs.disconnect(); }
                 }, { threshold: 0.15 });
                 io.observe(grid);
+            } else {
+                reveal();
+            }
+        })();
+
+        /* ---- Offers section scroll reveal ---- */
+        (function () {
+            const items = Array.from(document.querySelectorAll('#offers .offer-reveal'));
+            if (!items.length) return;
+
+            const reveal = () => items.forEach((el, i) => {
+                el.style.transitionDelay = (i * 0.15) + 's';
+                el.classList.add('in-view');
+            });
+
+            if ('IntersectionObserver' in window) {
+                const io = new IntersectionObserver((entries, obs) => {
+                    if (entries.some((e) => e.isIntersecting)) { reveal(); obs.disconnect(); }
+                }, { threshold: 0.2 });
+                items.forEach((el) => io.observe(el));
             } else {
                 reveal();
             }
