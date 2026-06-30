@@ -563,8 +563,49 @@
 </section>
 <!-- Trusted Clients Section -->
 
-     <!-- Footer section -->
-       <!-- Footer -->
+<!-- Testimonials Section -->
+<section id="testimonials" class="testimonials-bg relative overflow-hidden py-16 sm:py-24">
+    <!-- decorative glow orbs -->
+    <span class="t-orb t-orb--orange"></span>
+    <span class="t-orb t-orb--red"></span>
+
+    <div class="relative z-10 container mx-auto px-4 sm:px-6">
+        <div class="testimonials-head">
+            <span class="offer-kicker">Testimonials</span>
+            <h2> What Our Clients Say </h2>
+            <p class="t-sub">Real words from the brands we've partnered with — their stories speak louder than ours.</p>
+        </div>
+
+        <!-- Slider -->
+        <div id="tSlider" class="relative mt-12">
+            <!-- viewport -->
+            <div class="t-viewport overflow-hidden">
+                <div id="tTrack" class="flex transition-transform duration-500 ease-out">
+                    <!-- slides injected by JS -->
+                </div>
+            </div>
+
+            <!-- Arrows -->
+            <button type="button" data-slider-prev aria-label="Previous testimonial"
+                class="group absolute -left-2 top-1/2 z-10 hidden h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-gray-200 bg-white text-gray-700 shadow-lg transition-all duration-300 hover:scale-105 hover:border-red-300 hover:text-red-500 disabled:cursor-not-allowed disabled:opacity-40 sm:flex lg:-left-5">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+                </svg>
+            </button>
+            <button type="button" data-slider-next aria-label="Next testimonial"
+                class="group absolute -right-2 top-1/2 z-10 hidden h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-gray-200 bg-white text-gray-700 shadow-lg transition-all duration-300 hover:scale-105 hover:border-red-300 hover:text-red-500 disabled:cursor-not-allowed disabled:opacity-40 sm:flex lg:-right-5">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+                </svg>
+            </button>
+        </div>
+
+        <!-- Dots -->
+        <div id="tDots" class="mt-8 flex flex-wrap items-center justify-center gap-2"></div>
+    </div>
+</section>
+
+     <!-- Footer section --> 
     <footer class="footer-bg text-white">
         <!-- glow orbs -->
         <span class="footer-glow footer-glow--orange"></span>
@@ -575,9 +616,6 @@
 
                 <!-- Brand / about -->
                 <div class="sm:col-span-2 lg:col-span-4">
-                    <a href="#" class="inline-flex items-center">
-                        <img src="./img/bigleap-logo.png" alt="BigLeap" class="h-14 w-auto drop-shadow-lg sm:h-16">
-                    </a>
                     <p class="mt-5 max-w-sm text-sm leading-relaxed text-white/60">
                         We offer a full range of animation and production services, including 2D and 3D animation, VFX and motion graphics.
                     </p>
@@ -594,35 +632,38 @@
                             </svg>
                         </button>
                     </form>
-                </div>
 
-                <!-- Company -->
-                <div class="lg:col-span-2">
-                    <h3 class="footer-heading text-base font-semibold text-white">Company</h3>
-                    <ul class="mt-6 space-y-3 text-sm">
-                        <li><a href="#" class="footer-link">Home</a></li>
-                        <li><a href="#about" class="footer-link">About Us</a></li>
-                        <li><a href="#portfolio" class="footer-link">Portfolio</a></li>
-                        <li><a href="#contact" class="footer-link">Contact Us</a></li>
-                        <li><a href="#quote" class="footer-link">Get Free Quote</a></li>
-                        <li><a href="#" class="footer-link">Blog</a></li>
-                        <li><a href="#" class="footer-link">Sitemap</a></li>
-                    </ul>
+                      <!-- Social icons -->
+                      <div class="mt-6 flex items-center gap-3">
+                        <a href="#" aria-label="Facebook" class="footer-social">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987H7.898v-2.89h2.54V9.797c0-2.507 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z"/>
+                            </svg>
+                        </a>
+                        <a href="#" aria-label="Instagram" class="footer-social">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.366.062 2.633.334 3.608 1.308.974.974 1.246 2.241 1.308 3.608.058 1.266.069 1.646.069 4.85s-.012 3.584-.07 4.85c-.062 1.366-.334 2.633-1.308 3.608-.974.974-2.241 1.246-3.608 1.308-1.266.058-1.646.07-4.85.07s-3.584-.012-4.85-.07c-1.366-.062-2.633-.334-3.608-1.308-.974-.974-1.246-2.241-1.308-3.608C2.175 15.647 2.163 15.267 2.163 12s.012-3.584.07-4.85c.062-1.366.334-2.633 1.308-3.608.974-.974 2.241-1.246 3.608-1.308C8.416 2.175 8.796 2.163 12 2.163zm0 1.802c-3.15 0-3.522.012-4.764.069-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.057 1.242-.069 1.614-.069 4.764s.012 3.522.069 4.764c.045.975.207 1.504.344 1.857.182.467.398.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.242.057 1.614.069 4.764.069s3.522-.012 4.764-.069c.975-.045 1.504-.207 1.857-.344.467-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.057-1.242.069-1.614.069-4.764s-.012-3.522-.069-4.764c-.045-.975-.207-1.504-.344-1.857-.182-.467-.398-.8-.748-1.15-.35-.35-.683-.566-1.15-.748-.353-.137-.882-.3-1.857-.344-1.242-.057-1.614-.069-4.764-.069zm0 3.064A4.971 4.971 0 1012 17a4.971 4.971 0 000-9.971zm0 8.198A3.227 3.227 0 1112 8.773a3.227 3.227 0 010 6.454zm6.336-8.418a1.162 1.162 0 11-2.324 0 1.162 1.162 0 012.324 0z"/>
+                            </svg>
+                        </a>
+                        <a href="#" aria-label="LinkedIn" class="footer-social">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                            </svg>
+                        </a>
+                        <a href="#" aria-label="YouTube" class="footer-social">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                            </svg>
+                        </a>
+                    </div>
                 </div>
-
-                <!-- Services -->
-                <div class="lg:col-span-3">
-                    <h3 class="footer-heading text-base font-semibold text-white">Services</h3>
-                    <ul class="mt-6 space-y-3 text-sm">
-                        <li><a href="#services" class="footer-link">Logo Animation</a></li>
-                        <li><a href="#services" class="footer-link">2D &amp; 3D Animation</a></li>
-                        <li><a href="#services" class="footer-link">Explainer Videos</a></li>
-                        <li><a href="#services" class="footer-link">Character Design</a></li>
-                        <li><a href="#services" class="footer-link">Whiteboard Animation</a></li>
-                        <li><a href="#services" class="footer-link">Video Production</a></li>
-                        <li><a href="#services" class="footer-link">Motion Graphics</a></li>
-                    </ul>
-                </div>
+ 
+                 <!-- Logo -->
+                 <div class="sm:col-span-2 lg:col-span-4 flex flex-col items-center justify-center text-center">
+                    <img src="./img/bigleap-logo-icon.webp" alt="BigLeap Logo" class="w-30 h-auto">
+                    <img src="./img/bigleap-logo-text.webp" alt="BigLeap Logo" class="w-50 h-auto">
+                 </div>
+                 <!-- Logo -->
 
                 <!-- Contact -->
                 <div class="sm:col-span-2 lg:col-span-3">
@@ -673,30 +714,9 @@
                         </li>
                     </ul>
 
-                    <!-- Social icons -->
-                    <div class="mt-6 flex items-center gap-3">
-                        <a href="#" aria-label="Facebook" class="footer-social">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987H7.898v-2.89h2.54V9.797c0-2.507 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z"/>
-                            </svg>
-                        </a>
-                        <a href="#" aria-label="Instagram" class="footer-social">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.366.062 2.633.334 3.608 1.308.974.974 1.246 2.241 1.308 3.608.058 1.266.069 1.646.069 4.85s-.012 3.584-.07 4.85c-.062 1.366-.334 2.633-1.308 3.608-.974.974-2.241 1.246-3.608 1.308-1.266.058-1.646.07-4.85.07s-3.584-.012-4.85-.07c-1.366-.062-2.633-.334-3.608-1.308-.974-.974-1.246-2.241-1.308-3.608C2.175 15.647 2.163 15.267 2.163 12s.012-3.584.07-4.85c.062-1.366.334-2.633 1.308-3.608.974-.974 2.241-1.246 3.608-1.308C8.416 2.175 8.796 2.163 12 2.163zm0 1.802c-3.15 0-3.522.012-4.764.069-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.057 1.242-.069 1.614-.069 4.764s.012 3.522.069 4.764c.045.975.207 1.504.344 1.857.182.467.398.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.242.057 1.614.069 4.764.069s3.522-.012 4.764-.069c.975-.045 1.504-.207 1.857-.344.467-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.057-1.242.069-1.614.069-4.764s-.012-3.522-.069-4.764c-.045-.975-.207-1.504-.344-1.857-.182-.467-.398-.8-.748-1.15-.35-.35-.683-.566-1.15-.748-.353-.137-.882-.3-1.857-.344-1.242-.057-1.614-.069-4.764-.069zm0 3.064A4.971 4.971 0 1012 17a4.971 4.971 0 000-9.971zm0 8.198A3.227 3.227 0 1112 8.773a3.227 3.227 0 010 6.454zm6.336-8.418a1.162 1.162 0 11-2.324 0 1.162 1.162 0 012.324 0z"/>
-                            </svg>
-                        </a>
-                        <a href="#" aria-label="LinkedIn" class="footer-social">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
-                            </svg>
-                        </a>
-                        <a href="#" aria-label="YouTube" class="footer-social">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
-                            </svg>
-                        </a>
-                    </div>
+                   
                 </div>
+
             </div>
 
             <!-- Bottom bar -->
@@ -1010,6 +1030,193 @@
                 reveal();
             }
         })();
+
+        // ---- Testimonials slider (dependency-free, responsive, swipe + autoplay) ----
+        (function () {
+            const root = document.getElementById('tSlider');
+            const track = document.getElementById('tTrack');
+            const dotsWrap = document.getElementById('tDots');
+            if (!root || !track || !dotsWrap) return;
+
+            const prevBtn = root.querySelector('[data-slider-prev]');
+            const nextBtn = root.querySelector('[data-slider-next]');
+            const viewport = root.querySelector('.t-viewport');
+
+            // Testimonial data — swap photos/names/text freely.
+            const testimonials = [
+                {
+                    name: 'Ahmed Al Mansoori',
+                    role: 'Marketing Director, Yes Machinery',
+                    img: 'https://i.pravatar.cc/160?img=12',
+                    rating: 5,
+                    text: 'BigLeap turned our complex product into a stunning 3D animation that our clients instantly understood. The team was responsive, creative and delivered ahead of schedule.'
+                },
+                {
+                    name: 'Sara Khalifa',
+                    role: 'Brand Manager, Al Shurooq',
+                    img: 'https://i.pravatar.cc/160?img=45',
+                    rating: 5,
+                    text: 'Working with BigLeap felt like an extension of our own team. Their attention to detail and storytelling elevated our brand campaign far beyond what we imagined.'
+                },
+                {
+                    name: 'James Whitfield',
+                    role: 'CEO, Giffin Industries',
+                    img: 'https://i.pravatar.cc/160?img=33',
+                    rating: 5,
+                    text: 'From concept to final cut, the process was seamless. The character design work was exceptional and really gave our message a unique personality.'
+                },
+                {
+                    name: 'Layla Hassan',
+                    role: 'Creative Lead, MG Group',
+                    img: 'https://i.pravatar.cc/160?img=47',
+                    rating: 5,
+                    text: 'Professional, punctual and incredibly talented. Our explainer video boosted engagement on every platform we shared it on. Highly recommended!'
+                },
+                {
+                    name: 'Daniel Roberts',
+                    role: 'Product Head, M-Tech',
+                    img: 'https://i.pravatar.cc/160?img=15',
+                    rating: 5,
+                    text: 'The 2D animation they produced perfectly captured our brand tone. Communication was clear throughout and the revisions were handled patiently.'
+                },
+                {
+                    name: 'Fatima Noor',
+                    role: 'Founder, Anket',
+                    img: 'https://i.pravatar.cc/160?img=20',
+                    rating: 5,
+                    text: 'A truly creative studio. They listened to our vision and brought it to life with motion graphics that wowed our investors. We will be back for more.'
+                }
+            ];
+
+            const stars = (n) => Array.from({ length: 5 }, (_, i) =>
+                `<svg viewBox="0 0 20 20" fill="currentColor" class="${i < n ? 'on' : 'off'}"><path d="M10 1.5l2.6 5.3 5.9.86-4.25 4.14 1 5.86L10 15.9l-5.25 2.76 1-5.86L1.5 7.66l5.9-.86L10 1.5z"/></svg>`
+            ).join('');
+
+            // Build slides
+            track.innerHTML = testimonials.map((t) => `
+                <div class="slide shrink-0 px-2 sm:px-3" role="group">
+                    <article class="t-card group relative flex h-full flex-col">
+                        <span class="t-quote" aria-hidden="true">&ldquo;</span>
+                        <div class="t-stars">${stars(t.rating)}</div>
+                        <p class="t-text">${t.text}</p>
+                        <div class="t-person">
+                            <span class="t-avatar">
+                                <img src="${t.img}" alt="${t.name}" loading="lazy" />
+                            </span>
+                            <span class="t-meta">
+                                <span class="t-name">${t.name}</span>
+                                <span class="t-role">${t.role}</span>
+                            </span>
+                        </div>
+                    </article>
+                </div>
+            `).join('');
+
+            const slides = Array.from(track.children);
+
+            const perView = () => {
+                const w = window.innerWidth;
+                if (w >= 1024) return 3;
+                if (w >= 640) return 2;
+                return 1;
+            };
+
+            let index = 0;
+            let pv = perView();
+
+            const maxIndex = () => Math.max(0, slides.length - pv);
+
+            const layout = () => {
+                pv = perView();
+                slides.forEach((s) => { s.style.width = (100 / pv) + '%'; });
+                index = Math.min(index, maxIndex());
+                update();
+            };
+
+            const buildDots = () => {
+                dotsWrap.innerHTML = '';
+                const count = maxIndex() + 1;
+                for (let i = 0; i < count; i++) {
+                    const b = document.createElement('button');
+                    b.type = 'button';
+                    b.className = 'slider-dot';
+                    b.setAttribute('aria-label', 'Go to slide ' + (i + 1));
+                    b.addEventListener('click', () => { index = i; update(); restartAuto(); });
+                    dotsWrap.appendChild(b);
+                }
+            };
+
+            const update = () => {
+                track.style.transform = `translateX(-${index * (100 / pv)}%)`;
+                Array.from(dotsWrap.children).forEach((d, i) => d.classList.toggle('active', i === index));
+                if (prevBtn) prevBtn.disabled = index === 0;
+                if (nextBtn) nextBtn.disabled = index >= maxIndex();
+            };
+
+            const go = (dir) => {
+                index = Math.min(Math.max(index + dir, 0), maxIndex());
+                update();
+            };
+
+            prevBtn && prevBtn.addEventListener('click', () => { go(-1); restartAuto(); });
+            nextBtn && nextBtn.addEventListener('click', () => { go(1); restartAuto(); });
+
+            // Autoplay (loops back to start), paused on hover/focus/touch
+            let timer = null;
+            const AUTO_MS = 5000;
+            const startAuto = () => {
+                stopAuto();
+                timer = setInterval(() => {
+                    index = index >= maxIndex() ? 0 : index + 1;
+                    update();
+                }, AUTO_MS);
+            };
+            const stopAuto = () => { if (timer) { clearInterval(timer); timer = null; } };
+            const restartAuto = () => { startAuto(); };
+
+            root.addEventListener('mouseenter', stopAuto);
+            root.addEventListener('mouseleave', startAuto);
+            root.addEventListener('focusin', stopAuto);
+            root.addEventListener('focusout', startAuto);
+
+            // Drag / swipe support
+            let startX = 0, deltaX = 0, dragging = false;
+            const onDown = (x) => { dragging = true; startX = x; deltaX = 0; viewport.classList.add('is-dragging'); stopAuto(); };
+            const onMove = (x) => {
+                if (!dragging) return;
+                deltaX = x - startX;
+                const pct = (deltaX / viewport.offsetWidth) * 100;
+                track.style.transform = `translateX(calc(-${index * (100 / pv)}% + ${pct}%))`;
+            };
+            const onUp = () => {
+                if (!dragging) return;
+                dragging = false;
+                viewport.classList.remove('is-dragging');
+                const threshold = viewport.offsetWidth / pv / 4;
+                if (deltaX > threshold) go(-1);
+                else if (deltaX < -threshold) go(1);
+                else update();
+                startAuto();
+            };
+
+            viewport.addEventListener('mousedown', (e) => { onDown(e.clientX); });
+            window.addEventListener('mousemove', (e) => onMove(e.clientX));
+            window.addEventListener('mouseup', onUp);
+
+            viewport.addEventListener('touchstart', (e) => onDown(e.touches[0].clientX), { passive: true });
+            viewport.addEventListener('touchmove', (e) => onMove(e.touches[0].clientX), { passive: true });
+            viewport.addEventListener('touchend', onUp);
+
+            // prevent ghost click after drag
+            track.addEventListener('click', (e) => { if (Math.abs(deltaX) > 5) e.preventDefault(); }, true);
+
+            window.addEventListener('resize', () => { buildDots(); layout(); });
+
+            buildDots();
+            layout();
+            startAuto();
+        })();
+        // Testimonials slider End 
     </script>
 </body>
 
