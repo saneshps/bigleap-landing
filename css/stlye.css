@@ -1347,4 +1347,7 @@ box-shadow: 0 6px 24px rgb(0 0 0 / 3%);
 }
  
  
- 
+ .youtube-card-content iframe
+ {
+    width: 100%;
+ }
