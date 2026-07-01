@@ -568,14 +568,19 @@
 
 <!-- Testimonials new section -->
 <section id="testimonials-new" class="testimonials-new-bg relative overflow-hidden py-16 sm:py-24">
-    <div class="container mx-auto px-4 sm:px-6">
+    <span class="tn-orb tn-orb--orange" aria-hidden="true"></span>
+    <span class="tn-orb tn-orb--red" aria-hidden="true"></span>
+
+    <div class="relative z-10 container mx-auto px-4 sm:px-6">
         <div class="testimonials-new-head">
-            <h2>What Our Clients Say</h2>
+            <span class="offer-kicker">Testimonials</span>
+            <h2>What Our <span class="tn-grad">Clients Say</span></h2>
+            <p class="tn-sub">Real words from the brands we've partnered with — their stories speak louder than ours.</p>
         </div>
 
         <div id="tnSlider" class="tn-slider relative mt-10 sm:mt-14">
             <button type="button" data-slider-prev aria-label="Previous testimonial"
-                class="tn-arrow group">
+                class="tn-arrow tn-arrow--prev group">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
                 </svg>
@@ -588,7 +593,7 @@
             </div>
 
             <button type="button" data-slider-next aria-label="Next testimonial"
-                class="tn-arrow group">
+                class="tn-arrow tn-arrow--next group">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
                 </svg>
@@ -981,11 +986,14 @@
         // ---- Testimonials new slider (speech bubble) ----
         (function () {
             const items = [
-                { name: 'Mr. Horst Flaig', role: 'CEO of Flaig Magnetsysteme', img: './img/testimonials/flaig.webp', text: "We had the pleasure of working with BigLeap for our animated explanatory video at Flaig Magnetsysteme, and we couldn't be happier with the results! From start to finish, their team was professional, creative, and attentive to our needs. The final video perfectly captures our message in an engaging and clear way, helping us communicate more effectively with our audience. We highly recommend BigLeap to anyone looking for top-quality animation and excellent service. Thank you, BigLeap, for your fantastic work." },
-                { name: 'Mr. Prithviraj', role: 'Rackovan - Director', img: './img/testimonials/prithviraj.webp', text: "It's been 3 years with them and they never disappointed us. Their proactive approach, exceptional team skills, and attention to detail continuously exceeded our expectations. And also helped us to accelerate business growth." },
-                { name: 'Mr. Katariya', role: 'Director - Hytek Marketing', img: './img/testimonials/katariya.webp', text: "We are really impressed with their SEO work. They helped to bring a tremendous change in Google's ranking and also helped to increase conversion." },
-                { name: 'Mr. Basanth Raghavan', role: 'Managing Director - YES Machinery', img: './img/testimonials/basanth-raghavan.webp', text: "We have a great business relationship with BigLeap. A dynamic animation studio driven by creative minds that bring your ideas and vision to life. Absolutely impressed by their animation services, they've done a fantastic job in redesigning our website." },
+                { name: 'Mr. Horst Flaig', role: 'CEO of Flaig Magnetsysteme', img: './img/testimonials/flaig.webp', rating: 5, text: "We had the pleasure of working with BigLeap for our animated explanatory video at Flaig Magnetsysteme, and we couldn't be happier with the results! From start to finish, their team was professional, creative, and attentive to our needs. The final video perfectly captures our message in an engaging and clear way, helping us communicate more effectively with our audience. We highly recommend BigLeap to anyone looking for top-quality animation and excellent service. Thank you, BigLeap, for your fantastic work." },
+                { name: 'Mr. Prithviraj', role: 'Rackovan - Director', img: './img/testimonials/prithviraj.webp', rating: 5, text: "It's been 3 years with them and they never disappointed us. Their proactive approach, exceptional team skills, and attention to detail continuously exceeded our expectations. And also helped us to accelerate business growth." },
+                { name: 'Mr. Katariya', role: 'Director - Hytek Marketing', img: './img/testimonials/katariya.webp', rating: 5, text: "We are really impressed with their SEO work. They helped to bring a tremendous change in Google's ranking and also helped to increase conversion." },
+                { name: 'Mr. Basanth Raghavan', role: 'Managing Director - YES Machinery', img: './img/testimonials/basanth-raghavan.webp', rating: 5, text: "We have a great business relationship with BigLeap. A dynamic animation studio driven by creative minds that bring your ideas and vision to life. Absolutely impressed by their animation services, they've done a fantastic job in redesigning our website." },
             ];
+            const stars = (n) => Array.from({ length: 5 }, (_, i) =>
+                `<svg viewBox="0 0 20 20" fill="currentColor" class="${i < n ? 'on' : 'off'}"><path d="M10 1.5l2.6 5.3 5.9.86-4.25 4.14 1 5.86L10 15.9l-5.25 2.76 1-5.86L1.5 7.66l5.9-.86L10 1.5z"/></svg>`
+            ).join('');
 
             initSlider({
                 rootId: 'tnSlider',
@@ -995,12 +1003,19 @@
                 slidesHtml: items.map((t) => `
                 <div class="slide shrink-0" role="group">
                     <div class="tn-slide-inner">
-                        <div class="tn-bubble">
-                            <p class="tn-quote-text">&ldquo;${t.text}&rdquo;</p>
-                        </div>
+                        <article class="tn-bubble">
+                            <span class="tn-quote-icon" aria-hidden="true">&ldquo;</span>
+                            <div class="tn-stars">${stars(t.rating)}</div>
+                            <p class="tn-quote-text">${t.text}</p>
+                        </article>
                         <div class="tn-author">
-                            <img src="${t.img}" alt="${t.name}" loading="lazy" class="tn-avatar" />
-                            <span class="tn-author-meta">${t.name}, ${t.role}</span>
+                            <span class="tn-avatar-wrap">
+                                <img src="${t.img}" alt="${t.name}" loading="lazy" class="tn-avatar" />
+                            </span>
+                            <span class="tn-meta">
+                                <span class="tn-name">${t.name}</span>
+                                <span class="tn-role">${t.role}</span>
+                            </span>
                         </div>
                     </div>
                 </div>`).join(''),
