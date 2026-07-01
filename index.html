@@ -8,6 +8,8 @@
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://www.youtube.com">
+    <link rel="preconnect" href="https://www.google.com">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Suez+One&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css">
    <link rel="stylesheet" href="./css/stlye.css">
@@ -1183,11 +1185,22 @@
             };
 
             const open = (id, title, start = 0) => {
-                const startParam = start > 0 ? `&start=${start}` : '';
-                videoWrap.innerHTML = `<iframe src="https://www.youtube.com/embed/${id}?autoplay=1&rel=0${startParam}" title="${title.replace(/"/g, '&quot;')}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`;
                 modal.removeAttribute('hidden');
                 modal.setAttribute('aria-hidden', 'false');
                 document.body.style.overflow = 'hidden';
+
+                const startParam = start > 0 ? `&start=${start}` : '';
+                const safeTitle = title.replace(/"/g, '&quot;');
+                videoWrap.innerHTML = `
+                    <div class="yt-modal-loading" aria-hidden="true">
+                        <span class="yt-modal-spinner"></span>
+                    </div>
+                    <iframe src="https://www.youtube.com/embed/${id}?autoplay=1&rel=0${startParam}" title="${safeTitle}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`;
+
+                videoWrap.querySelector('iframe')?.addEventListener('load', () => {
+                    videoWrap.querySelector('.yt-modal-loading')?.remove();
+                }, { once: true });
+
                 modal.querySelector('.yt-modal-close')?.focus();
             };
 
