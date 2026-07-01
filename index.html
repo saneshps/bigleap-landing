@@ -570,52 +570,36 @@
 <section id="testimonials-new" class="testimonials-new-bg relative overflow-hidden py-16 sm:py-24">
     <div class="container mx-auto px-4 sm:px-6">
         <div class="testimonials-new-head">
-            <h2> What Our Clients Say </h2>
-        </div>
-    </div>
-</section>
-
-<!-- Testimonials Section -->
-<section id="testimonials" class="testimonials-bg relative overflow-hidden py-16 sm:py-24">
-    <!-- decorative glow orbs -->
-    <span class="t-orb t-orb--orange"></span>
-    <span class="t-orb t-orb--red"></span>
-
-    <div class="relative z-10 container mx-auto px-4 sm:px-6">
-        <div class="testimonials-head">
-            <span class="offer-kicker">Testimonials</span>
-            <h2> What Our Clients Say </h2>
-            <p class="t-sub">Real words from the brands we've partnered with — their stories speak louder than ours.</p>
+            <h2>What Our Clients Say</h2>
         </div>
 
-        <!-- Slider -->
-        <div id="tSlider" class="relative mt-12">
-            <!-- viewport -->
-            <div class="t-viewport overflow-hidden">
-                <div id="tTrack" class="flex transition-transform duration-500 ease-out">
-                    <!-- slides injected by JS -->
-                </div>
-            </div>
-
-            <!-- Arrows -->
+        <div id="tnSlider" class="tn-slider relative mt-10 sm:mt-14">
             <button type="button" data-slider-prev aria-label="Previous testimonial"
-                class="group absolute -left-2 top-1/2 z-10 hidden h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-gray-200 bg-white text-gray-700 shadow-lg transition-all duration-300 hover:scale-105 hover:border-red-300 hover:text-red-500 disabled:cursor-not-allowed disabled:opacity-40 sm:flex lg:-left-5">
+                class="tn-arrow group">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
                 </svg>
             </button>
+
+            <div class="tn-viewport overflow-hidden">
+                <div id="tnTrack" class="flex transition-transform duration-500 ease-out">
+                    <!-- slides injected by JS -->
+                </div>
+            </div>
+
             <button type="button" data-slider-next aria-label="Next testimonial"
-                class="group absolute -right-2 top-1/2 z-10 hidden h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-gray-200 bg-white text-gray-700 shadow-lg transition-all duration-300 hover:scale-105 hover:border-red-300 hover:text-red-500 disabled:cursor-not-allowed disabled:opacity-40 sm:flex lg:-right-5">
+                class="tn-arrow group">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
                 </svg>
             </button>
         </div>
 
-        <!-- Dots -->
-        <div id="tDots" class="mt-8 flex flex-wrap items-center justify-center gap-2"></div>
+        <div id="tnDots" class="tn-dots mt-8 flex flex-wrap items-center justify-center gap-2"></div>
     </div>
 </section>
+
+ 
 
      <!-- Footer section --> 
     <footer class="footer-bg text-white">
@@ -992,99 +976,37 @@
             }
         })();
 
-        // ---- Testimonials slider ----
+ 
+
+        // ---- Testimonials new slider (speech bubble) ----
         (function () {
             const items = [
-                { name: 'Mr. Horst Flaig', role: 'CEO of Flaig Magnetsysteme', img: './img/testimonials/flaig.webp', rating: 5, text: "We had the pleasure of working with BigLeap for our animated explanatory video at Flaig Magnetsysteme, and we couldn't be happier with the results! From start to finish, their team was professional, creative, and attentive to our needs. The final video perfectly captures our message in an engaging and clear way, helping us communicate more effectively with our audience. We highly recommend BigLeap to anyone looking for top-quality animation and excellent service. Thank you, BigLeap, for your fantastic work." },
-                { name: 'Mr. Prithviraj', role: 'Rackovan - Director', img: './img/testimonials/prithviraj.webp', rating: 5, text: " It's been 3 years with them and they never disappointed us.Their proactive approach, exceptional team skills, and attention to detail continuously exceeded our expectations. And also helped us to accelerate business growth. " },
-                { name: 'Mr. Katariya', role: 'Director- Hytek Marketing', img: './img/testimonials/katariya.webp', rating: 5, text: "We are really impressed with their SEO work. They helped to bring a tremendous change in Google's ranking and also helped to increase conversion." },
-                { name: 'Mr. Basanth Raghavan', role: 'Managing Director - YES Machinery', img: './img/testimonials/basanth-raghavan.webp', rating: 5, text: "We have a great business relationship with BigLeap. A dynamic animation studio driven by creative minds that bring your ideas and vision to life. Absolutely impressed by their animation services, they’ve done a fantastic job in redesigning our website" },
-              
+                { name: 'Mr. Horst Flaig', role: 'CEO of Flaig Magnetsysteme', img: './img/testimonials/flaig.webp', text: "We had the pleasure of working with BigLeap for our animated explanatory video at Flaig Magnetsysteme, and we couldn't be happier with the results! From start to finish, their team was professional, creative, and attentive to our needs. The final video perfectly captures our message in an engaging and clear way, helping us communicate more effectively with our audience. We highly recommend BigLeap to anyone looking for top-quality animation and excellent service. Thank you, BigLeap, for your fantastic work." },
+                { name: 'Mr. Prithviraj', role: 'Rackovan - Director', img: './img/testimonials/prithviraj.webp', text: "It's been 3 years with them and they never disappointed us. Their proactive approach, exceptional team skills, and attention to detail continuously exceeded our expectations. And also helped us to accelerate business growth." },
+                { name: 'Mr. Katariya', role: 'Director - Hytek Marketing', img: './img/testimonials/katariya.webp', text: "We are really impressed with their SEO work. They helped to bring a tremendous change in Google's ranking and also helped to increase conversion." },
+                { name: 'Mr. Basanth Raghavan', role: 'Managing Director - YES Machinery', img: './img/testimonials/basanth-raghavan.webp', text: "We have a great business relationship with BigLeap. A dynamic animation studio driven by creative minds that bring your ideas and vision to life. Absolutely impressed by their animation services, they've done a fantastic job in redesigning our website." },
             ];
-            const stars = (n) => Array.from({ length: 5 }, (_, i) =>
-                `<svg viewBox="0 0 20 20" fill="currentColor" class="${i < n ? 'on' : 'off'}"><path d="M10 1.5l2.6 5.3 5.9.86-4.25 4.14 1 5.86L10 15.9l-5.25 2.76 1-5.86L1.5 7.66l5.9-.86L10 1.5z"/></svg>`
-            ).join('');
 
             initSlider({
-                rootId: 'tSlider',
-                trackId: 'tTrack',
-                dotsId: 'tDots',
-                viewportSel: '.t-viewport',
+                rootId: 'tnSlider',
+                trackId: 'tnTrack',
+                dotsId: 'tnDots',
+                viewportSel: '.tn-viewport',
                 slidesHtml: items.map((t) => `
-                <div class="slide shrink-0 px-2 sm:px-3" role="group">
-                    <article class="t-card group relative flex h-full flex-col">
-                        <span class="t-quote" aria-hidden="true">&ldquo;</span>
-                        <div class="t-stars">${stars(t.rating)}</div>
-                        <p class="t-text">${t.text}</p>
-                        <div class="t-person">
-                            <span class="t-avatar"><img src="${t.img}" alt="${t.name}" loading="lazy" /></span>
-                            <span class="t-meta"><span class="t-name">${t.name}</span><span class="t-role">${t.role}</span></span>
+                <div class="slide shrink-0" role="group">
+                    <div class="tn-slide-inner">
+                        <div class="tn-bubble">
+                            <p class="tn-quote-text">&ldquo;${t.text}&rdquo;</p>
                         </div>
-                    </article>
+                        <div class="tn-author">
+                            <img src="${t.img}" alt="${t.name}" loading="lazy" class="tn-avatar" />
+                            <span class="tn-author-meta">${t.name}, ${t.role}</span>
+                        </div>
+                    </div>
                 </div>`).join(''),
-                perView: () => window.innerWidth >= 1024 ? 3 : window.innerWidth >= 640 ? 2 : 1,
-                autoMs: 5000
+                perView: () => 1,
+                autoMs: 5500
             });
-
-            const CLAMP_LINES = 5;
-            const markExpandableTestimonials = () => {
-                if (!window.matchMedia('(hover: hover)').matches) return;
-                const tSlider = document.getElementById('tSlider');
-                const tSection = document.getElementById('testimonials');
-                document.querySelectorAll('#tSlider .t-card').forEach((card) => {
-                    const text = card.querySelector('.t-text');
-                    if (!text) return;
-                    card.classList.remove('t-card--expandable');
-                    const prev = text.style.cssText;
-                    text.style.display = '-webkit-box';
-                    text.style.webkitBoxOrient = 'vertical';
-                    text.style.webkitLineClamp = String(CLAMP_LINES);
-                    text.style.overflow = 'hidden';
-                    const isLong = text.scrollHeight > text.clientHeight + 2;
-                    text.style.cssText = prev;
-                    if (isLong) card.classList.add('t-card--expandable');
-                });
-
-                tSlider?.querySelectorAll('.t-card--expandable').forEach((card) => {
-                    if (card.dataset.expandBound) return;
-                    card.dataset.expandBound = '1';
-                    const text = card.querySelector('.t-text');
-
-                    const expandCard = () => {
-                        tSlider?.classList.add('has-expanded-card');
-                        tSection?.classList.add('has-expanded-card');
-                        card.classList.add('is-expanded');
-                        if (!text) return;
-                        text.style.display = 'block';
-                        text.style.webkitLineClamp = 'unset';
-                        text.style.webkitBoxOrient = 'unset';
-                        text.style.overflow = 'visible';
-                        text.style.flex = '0 0 auto';
-                        requestAnimationFrame(() => {
-                            card.style.height = card.scrollHeight + 'px';
-                        });
-                    };
-
-                    const collapseCard = () => {
-                        tSlider?.classList.remove('has-expanded-card');
-                        tSection?.classList.remove('has-expanded-card');
-                        card.classList.remove('is-expanded');
-                        card.style.height = '';
-                        if (!text) return;
-                        text.style.display = '';
-                        text.style.webkitLineClamp = '';
-                        text.style.webkitBoxOrient = '';
-                        text.style.overflow = '';
-                        text.style.flex = '';
-                    };
-
-                    card.addEventListener('mouseenter', expandCard);
-                    card.addEventListener('mouseleave', collapseCard);
-                });
-            };
-
-            markExpandableTestimonials();
-            window.addEventListener('resize', markExpandableTestimonials);
         })();
     </script>
 </body>

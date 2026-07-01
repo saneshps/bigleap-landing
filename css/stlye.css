@@ -860,3 +860,142 @@ box-shadow: 0 6px 24px rgb(0 0 0 / 3%);
     .t-card { padding: 26px 22px 24px; }
     .t-quote { font-size: 4.5rem; }
 }
+
+/* ---- Testimonials new (speech bubble slider) ---- */
+.testimonials-new-bg {
+    background: #56a9e1;
+}
+
+.testimonials-new-head {
+    text-align: center;
+}
+
+.testimonials-new-head h2 {
+    font-family: 'Suez One', serif;
+    font-size: clamp(1.9rem, 4.5vw, 3rem);
+    line-height: 1.1;
+    color: #fff;
+}
+
+.tn-slider {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    max-width: 860px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.tn-viewport {
+    flex: 1;
+    min-width: 0;
+    cursor: grab;
+}
+
+.tn-viewport.is-dragging { cursor: grabbing; }
+.tn-viewport.is-dragging #tnTrack { transition: none; }
+
+.tn-slide-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 0.25rem;
+}
+
+.tn-bubble {
+    position: relative;
+    width: 100%;
+    padding: 1.75rem 1.5rem;
+    border-radius: 10px;
+    background: #2a70a1;
+    color: #fff;
+}
+
+.tn-bubble::after {
+    content: '';
+    position: absolute;
+    bottom: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 12px solid transparent;
+    border-top-color: #2a70a1;
+    border-bottom: 0;
+}
+
+.tn-quote-text {
+    margin: 0;
+    font-size: 0.98rem;
+    line-height: 1.75;
+    text-align: left;
+}
+
+.tn-author {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 1.75rem;
+    color: #fff;
+}
+
+.tn-avatar {
+    flex-shrink: 0;
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid rgba(255, 255, 255, 0.55);
+}
+
+.tn-author-meta {
+    font-size: 0.95rem;
+    font-weight: 500;
+    line-height: 1.4;
+}
+
+.tn-arrow {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    border: 2px solid #fff;
+    background: transparent;
+    color: #fff;
+    transition: background 0.25s ease, transform 0.25s ease, opacity 0.25s ease;
+}
+
+.tn-arrow:hover:not(:disabled) {
+    background: rgba(255, 255, 255, 0.15);
+    transform: scale(1.05);
+}
+
+.tn-arrow:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+}
+
+.tn-dots .slider-dot {
+    background: rgba(255, 255, 255, 0.4);
+}
+
+.tn-dots .slider-dot.active {
+    width: 26px;
+    background: #fff;
+}
+
+@media (min-width: 640px) {
+    .tn-bubble {
+        padding: 2rem 2.25rem;
+    }
+
+    .tn-quote-text {
+        font-size: 1.02rem;
+    }
+
+    .tn-arrow {
+        width: 48px;
+        height: 48px;
+    }
+}
