@@ -1289,13 +1289,28 @@ box-shadow: 0 6px 24px rgb(0 0 0 / 3%);
 .youtube-bg {
     position: relative;
     overflow: hidden;
-    background-color: #721212;
+    background-color: #5a0e0e;
     background-image:
+        radial-gradient(ellipse 80% 55% at 50% 100%, rgba(249, 115, 22, 0.14) 0%, transparent 65%),
+        radial-gradient(ellipse 60% 45% at 50% 0%, rgba(239, 68, 68, 0.1) 0%, transparent 60%),
         radial-gradient(rgba(0, 0, 0, 0.22) 1.2px, transparent 1.2px),
         radial-gradient(rgba(0, 0, 0, 0.16) 1.2px, transparent 1.2px),
-        linear-gradient(to right, #2b0505 0%, #6b1010 42%, #9e1a1a 100%);
-    background-size: 16px 16px, 16px 16px, 100% 100%;
-    background-position: 0 0, 8px 8px, 0 0;
+        linear-gradient(to right, #1a0303 0%, #5c0e0e 38%, #8b1515 68%, #a81818 100%);
+    background-size: 100% 100%, 100% 100%, 16px 16px, 16px 16px, 100% 100%;
+    background-position: 0 0, 0 0, 0 0, 8px 8px, 0 0;
+}
+
+.youtube-bg::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(to right, transparent, #f97316, #ef4444, transparent);
+    opacity: 0.85;
+    z-index: 2;
+    pointer-events: none;
 }
 
 .youtube-bg::after {
@@ -1304,7 +1319,7 @@ box-shadow: 0 6px 24px rgb(0 0 0 / 3%);
     inset: 0;
     pointer-events: none;
     z-index: 0;
-    opacity: 0.2;
+    opacity: 0.18;
     mix-blend-mode: overlay;
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
     background-size: 180px 180px;
@@ -1313,26 +1328,52 @@ box-shadow: 0 6px 24px rgb(0 0 0 / 3%);
 .yt-orb {
     position: absolute;
     border-radius: 9999px;
-    filter: blur(120px);
-    opacity: 0.5;
+    filter: blur(100px);
     pointer-events: none;
     z-index: 0;
+    will-change: transform;
 }
 .yt-orb--orange {
-    width: 320px;
-    height: 320px;
-    top: -80px;
-    left: -70px;
-    background: radial-gradient(circle, rgba(249, 115, 22, 0.2), transparent 70%);
-    opacity: 0.25;
+    width: 440px;
+    height: 440px;
+    top: -120px;
+    left: -100px;
+    background: radial-gradient(circle, rgba(249, 115, 22, 0.55) 0%, rgba(249, 115, 22, 0.15) 45%, transparent 72%);
+    opacity: 0.55;
+    animation: ytOrbFloat 10s ease-in-out infinite;
 }
 .yt-orb--red {
-    width: 380px;
-    height: 380px;
-    bottom: -120px;
-    right: -80px;
-    background: radial-gradient(circle, rgba(239, 68, 68, 0.18), transparent 70%);
-    opacity: 0.25;
+    width: 500px;
+    height: 500px;
+    bottom: -160px;
+    right: -110px;
+    background: radial-gradient(circle, rgba(239, 68, 68, 0.5) 0%, rgba(239, 68, 68, 0.12) 45%, transparent 72%);
+    opacity: 0.5;
+    animation: ytOrbFloat 12s ease-in-out infinite reverse;
+}
+.yt-orb--center {
+    width: 560px;
+    height: 320px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: radial-gradient(ellipse,
+        rgba(249, 115, 22, 0.2) 0%,
+        rgba(239, 68, 68, 0.1) 40%,
+        transparent 72%);
+    opacity: 0.45;
+    filter: blur(90px);
+    animation: ytOrbCenter 14s ease-in-out infinite;
+}
+
+@keyframes ytOrbFloat {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(28px, 22px) scale(1.1); }
+}
+
+@keyframes ytOrbCenter {
+    0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.4; }
+    50% { transform: translate(-50%, -48%) scale(1.08); opacity: 0.55; }
 }
 
 .youtube-head {
@@ -1350,10 +1391,11 @@ box-shadow: 0 6px 24px rgb(0 0 0 / 3%);
 }
 
 .yt-grad {
-    background: linear-gradient(to right, #f97316, #ef4444);
+    background: linear-gradient(105deg, #fb923c 0%, #f97316 35%, #ef4444 70%, #f43f5e 100%);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
+    filter: drop-shadow(0 0 22px rgba(249, 115, 22, 0.45));
 }
 
 .yt-sub {
@@ -1364,28 +1406,108 @@ box-shadow: 0 6px 24px rgb(0 0 0 / 3%);
 }
 
 /* video card grid */
- 
+.youtube-grid {
+    position: relative;
+    isolation: isolate;
+}
+
+.youtube-grid::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: min(92%, 920px);
+    height: 72%;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    background: radial-gradient(ellipse at center,
+        rgba(249, 115, 22, 0.14) 0%,
+        rgba(239, 68, 68, 0.08) 38%,
+        transparent 72%);
+    filter: blur(48px);
+    pointer-events: none;
+    z-index: -1;
+}
 
 .youtube-card {
+    position: relative;
     display: block;
     width: 100%;
     padding: 0;
     border: none;
-    border-radius: 14px;
-    background: #111111;
+    border-radius: 16px;
+    background:
+        radial-gradient(120% 90% at 50% -20%, rgba(249, 115, 22, 0.12) 0%, transparent 55%),
+        linear-gradient(165deg, #1a1214 0%, #100c0d 100%);
     text-align: left;
     cursor: pointer;
     overflow: hidden;
-    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
-                box-shadow 0.35s ease;
+    box-shadow:
+        0 4px 24px -6px rgba(0, 0, 0, 0.5),
+        0 0 0 1px rgba(255, 255, 255, 0.06),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    transition:
+        transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+        box-shadow 0.4s ease;
 }
+
+.youtube-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1.5px;
+    background: linear-gradient(135deg,
+        rgba(249, 115, 22, 0.55) 0%,
+        rgba(239, 68, 68, 0.35) 50%,
+        rgba(249, 115, 22, 0.2) 100%);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    mask-composite: exclude;
+    opacity: 0.35;
+    transition: opacity 0.4s ease;
+    z-index: 3;
+    pointer-events: none;
+}
+
+.youtube-card::after {
+    content: "";
+    position: absolute;
+    inset: -40%;
+    background: radial-gradient(circle at 50% 0%,
+        rgba(249, 115, 22, 0.22) 0%,
+        transparent 55%);
+    opacity: 0;
+    transition: opacity 0.45s ease;
+    pointer-events: none;
+    z-index: 0;
+}
+
 .youtube-card:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 24px 48px -12px rgba(0, 0, 0, 0.45);
+    transform: translateY(-8px);
+    box-shadow:
+        0 28px 56px -14px rgba(0, 0, 0, 0.55),
+        0 0 40px -8px rgba(249, 115, 22, 0.55),
+        0 0 56px -12px rgba(239, 68, 68, 0.4),
+        0 0 0 1px rgba(249, 115, 22, 0.25);
 }
+
+.youtube-card:hover::before {
+    opacity: 1;
+}
+
+.youtube-card:hover::after {
+    opacity: 1;
+}
+
 .youtube-card:focus-visible {
     outline: 2px solid #f97316;
-    outline-offset: 3px;
+    outline-offset: 4px;
+    box-shadow:
+        0 0 0 4px rgba(249, 115, 22, 0.2),
+        0 28px 56px -14px rgba(0, 0, 0, 0.55),
+        0 0 40px -8px rgba(249, 115, 22, 0.55);
 }
 
 .youtube-card-thumb {
@@ -1393,6 +1515,23 @@ box-shadow: 0 6px 24px rgb(0 0 0 / 3%);
     aspect-ratio: 16 / 9;
     overflow: hidden;
     background: #1a1a1a;
+    z-index: 1;
+}
+
+.youtube-card-thumb::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    box-shadow: inset 0 0 48px -12px rgba(249, 115, 22, 0.35);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+    z-index: 2;
+}
+
+.youtube-card:hover .youtube-card-thumb::after {
+    opacity: 1;
 }
 .youtube-card-thumb img {
     width: 100%;
@@ -1417,28 +1556,59 @@ box-shadow: 0 6px 24px rgb(0 0 0 / 3%);
     background: rgba(0, 0, 0, 0.35);
 }
 .youtube-card-play-btn {
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
     width: 68px;
     height: 68px;
     border-radius: 50%;
-    background: #ed2124;
+    background: linear-gradient(145deg, #ff3b3e 0%, #ed2124 55%, #c41a1d 100%);
     color: #fff;
-    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.4);
-    transition: transform 0.3s ease, background 0.3s ease;
+    box-shadow:
+        0 8px 28px rgba(0, 0, 0, 0.45),
+        0 0 24px rgba(237, 33, 36, 0.55),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    transition:
+        transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+        box-shadow 0.35s ease;
 }
+
+.youtube-card-play-btn::before {
+    content: "";
+    position: absolute;
+    inset: -6px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(237, 33, 36, 0.45) 0%, transparent 70%);
+    opacity: 0.7;
+    z-index: -1;
+    animation: ytPlayPulse 2.4s ease-in-out infinite;
+}
+
 .youtube-card-play-btn svg {
     width: 28px;
     height: 28px;
     margin-left: 3px;
+    filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.25));
 }
+
 .youtube-card:hover .youtube-card-play-btn {
-    transform: scale(1.08);
-    background: #ed2124;
+    transform: scale(1.1);
+    box-shadow:
+        0 12px 36px rgba(0, 0, 0, 0.5),
+        0 0 36px rgba(237, 33, 36, 0.75),
+        0 0 56px rgba(249, 115, 22, 0.35),
+        inset 0 1px 0 rgba(255, 255, 255, 0.25);
+}
+
+@keyframes ytPlayPulse {
+    0%, 100% { transform: scale(1); opacity: 0.55; }
+    50% { transform: scale(1.18); opacity: 0.9; }
 }
 
 .youtube-card-body {
+    position: relative;
+    z-index: 1;
     padding: 1.1rem 1.25rem 1.35rem;
 }
 .youtube-card-title {
@@ -1452,6 +1622,20 @@ box-shadow: 0 6px 24px rgb(0 0 0 / 3%);
     font-size: 0.88rem;
     line-height: 1.55;
     color: rgba(255, 255, 255, 0.55);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .yt-orb--orange,
+    .yt-orb--red,
+    .yt-orb--center {
+        animation: none;
+    }
+    .youtube-card-play-btn::before {
+        animation: none;
+    }
+    .youtube-card:hover {
+        transform: none;
+    }
 }
 
 /* video popup modal */
