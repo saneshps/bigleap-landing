@@ -56,6 +56,8 @@
         <!-- Video (fills the hero) -->
         <video src="img/desktop-video.webm" autoplay muted loop playsinline
             class="absolute inset-0 h-full w-full object-cover"></video>
+        <!-- <video src="img/Bigleap_Intro.mp4" autoplay muted loop playsinline
+            class="absolute inset-0 h-full w-full object-cover"></video> -->
 
         <!-- Readability overlays -->
         <div class="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/60 via-black/20 to-black/40"></div>
@@ -984,12 +986,11 @@
         // ---- Testimonials slider ----
         (function () {
             const items = [
-                { name: 'Ahmed Al Mansoori', role: 'Marketing Director, Yes Machinery', img: 'https://i.pravatar.cc/160?img=12', rating: 5, text: 'BigLeap turned our complex product into a stunning 3D animation that our clients instantly understood. The team was responsive, creative and delivered ahead of schedule.' },
-                { name: 'Sara Khalifa', role: 'Brand Manager, Al Shurooq', img: 'https://i.pravatar.cc/160?img=45', rating: 5, text: 'Working with BigLeap felt like an extension of our own team. Their attention to detail and storytelling elevated our brand campaign far beyond what we imagined.' },
-                { name: 'James Whitfield', role: 'CEO, Giffin Industries', img: 'https://i.pravatar.cc/160?img=33', rating: 5, text: 'From concept to final cut, the process was seamless. The character design work was exceptional and really gave our message a unique personality.' },
-                { name: 'Layla Hassan', role: 'Creative Lead, MG Group', img: 'https://i.pravatar.cc/160?img=47', rating: 5, text: 'Professional, punctual and incredibly talented. Our explainer video boosted engagement on every platform we shared it on. Highly recommended!' },
-                { name: 'Daniel Roberts', role: 'Product Head, M-Tech', img: 'https://i.pravatar.cc/160?img=15', rating: 5, text: 'The 2D animation they produced perfectly captured our brand tone. Communication was clear throughout and the revisions were handled patiently.' },
-                { name: 'Fatima Noor', role: 'Founder, Anket', img: 'https://i.pravatar.cc/160?img=20', rating: 5, text: 'A truly creative studio. They listened to our vision and brought it to life with motion graphics that wowed our investors. We will be back for more.' }
+                { name: 'Mr. Horst Flaig', role: 'CEO of Flaig Magnetsysteme', img: './img/testimonials/flaig.webp', rating: 5, text: "We had the pleasure of working with BigLeap for our animated explanatory video at Flaig Magnetsysteme, and we couldn't be happier with the results! From start to finish, their team was professional, creative, and attentive to our needs. The final video perfectly captures our message in an engaging and clear way, helping us communicate more effectively with our audience. We highly recommend BigLeap to anyone looking for top-quality animation and excellent service. Thank you, BigLeap, for your fantastic work." },
+                { name: 'Mr. Prithviraj', role: 'Rackovan - Director', img: './img/testimonials/prithviraj.webp', rating: 5, text: " It's been 3 years with them and they never disappointed us.Their proactive approach, exceptional team skills, and attention to detail continuously exceeded our expectations. And also helped us to accelerate business growth. " },
+                { name: 'Mr. Katariya', role: 'Director- Hytek Marketing', img: './img/testimonials/katariya.webp', rating: 5, text: "We are really impressed with their SEO work. They helped to bring a tremendous change in Google's ranking and also helped to increase conversion." },
+                { name: 'Mr. Basanth Raghavan', role: 'Managing Director - YES Machinery', img: './img/testimonials/basanth-raghavan.webp', rating: 5, text: "We have a great business relationship with BigLeap. A dynamic animation studio driven by creative minds that bring your ideas and vision to life. Absolutely impressed by their animation services, they’ve done a fantastic job in redesigning our website" },
+              
             ];
             const stars = (n) => Array.from({ length: 5 }, (_, i) =>
                 `<svg viewBox="0 0 20 20" fill="currentColor" class="${i < n ? 'on' : 'off'}"><path d="M10 1.5l2.6 5.3 5.9.86-4.25 4.14 1 5.86L10 15.9l-5.25 2.76 1-5.86L1.5 7.66l5.9-.86L10 1.5z"/></svg>`
