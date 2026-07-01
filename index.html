@@ -566,6 +566,15 @@
 </section>
 <!-- Trusted Clients Section -->
 
+<!-- Testimonials new section -->
+<section id="testimonials-new" class="testimonials-new-bg relative overflow-hidden py-16 sm:py-24">
+    <div class="container mx-auto px-4 sm:px-6">
+        <div class="testimonials-new-head">
+            <h2> What Our Clients Say </h2>
+        </div>
+    </div>
+</section>
+
 <!-- Testimonials Section -->
 <section id="testimonials" class="testimonials-bg relative overflow-hidden py-16 sm:py-24">
     <!-- decorative glow orbs -->
@@ -1016,6 +1025,66 @@
                 perView: () => window.innerWidth >= 1024 ? 3 : window.innerWidth >= 640 ? 2 : 1,
                 autoMs: 5000
             });
+
+            const CLAMP_LINES = 5;
+            const markExpandableTestimonials = () => {
+                if (!window.matchMedia('(hover: hover)').matches) return;
+                const tSlider = document.getElementById('tSlider');
+                const tSection = document.getElementById('testimonials');
+                document.querySelectorAll('#tSlider .t-card').forEach((card) => {
+                    const text = card.querySelector('.t-text');
+                    if (!text) return;
+                    card.classList.remove('t-card--expandable');
+                    const prev = text.style.cssText;
+                    text.style.display = '-webkit-box';
+                    text.style.webkitBoxOrient = 'vertical';
+                    text.style.webkitLineClamp = String(CLAMP_LINES);
+                    text.style.overflow = 'hidden';
+                    const isLong = text.scrollHeight > text.clientHeight + 2;
+                    text.style.cssText = prev;
+                    if (isLong) card.classList.add('t-card--expandable');
+                });
+
+                tSlider?.querySelectorAll('.t-card--expandable').forEach((card) => {
+                    if (card.dataset.expandBound) return;
+                    card.dataset.expandBound = '1';
+                    const text = card.querySelector('.t-text');
+
+                    const expandCard = () => {
+                        tSlider?.classList.add('has-expanded-card');
+                        tSection?.classList.add('has-expanded-card');
+                        card.classList.add('is-expanded');
+                        if (!text) return;
+                        text.style.display = 'block';
+                        text.style.webkitLineClamp = 'unset';
+                        text.style.webkitBoxOrient = 'unset';
+                        text.style.overflow = 'visible';
+                        text.style.flex = '0 0 auto';
+                        requestAnimationFrame(() => {
+                            card.style.height = card.scrollHeight + 'px';
+                        });
+                    };
+
+                    const collapseCard = () => {
+                        tSlider?.classList.remove('has-expanded-card');
+                        tSection?.classList.remove('has-expanded-card');
+                        card.classList.remove('is-expanded');
+                        card.style.height = '';
+                        if (!text) return;
+                        text.style.display = '';
+                        text.style.webkitLineClamp = '';
+                        text.style.webkitBoxOrient = '';
+                        text.style.overflow = '';
+                        text.style.flex = '';
+                    };
+
+                    card.addEventListener('mouseenter', expandCard);
+                    card.addEventListener('mouseleave', collapseCard);
+                });
+            };
+
+            markExpandableTestimonials();
+            window.addEventListener('resize', markExpandableTestimonials);
         })();
     </script>
 </body>
