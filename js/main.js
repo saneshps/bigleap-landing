@@ -378,10 +378,13 @@ function initSlider({ rootId, trackId, dotsId, viewportSel, slidesHtml, perView,
     const cursor = document.getElementById('customCursor');
     if (!cursor || !window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
 
-    const offsetX = 18;
-    const offsetY = 18;
-    let x = -100;
-    let y = -100;
+    const offsetX = 4;
+    const offsetY = 4;
+    const ease = 0.22;
+    let targetX = -100;
+    let targetY = -100;
+    let currentX = -100;
+    let currentY = -100;
     let visible = false;
 
     const show = () => {
@@ -397,13 +400,15 @@ function initSlider({ rootId, trackId, dotsId, viewportSel, slidesHtml, perView,
     };
 
     const onMove = (e) => {
-        x = e.clientX + offsetX;
-        y = e.clientY + offsetY;
+        targetX = e.clientX + offsetX;
+        targetY = e.clientY + offsetY;
         show();
     };
 
     const render = () => {
-        cursor.style.transform = `translate3d(${x}px, ${y}px, 0)`;
+        currentX += (targetX - currentX) * ease;
+        currentY += (targetY - currentY) * ease;
+        cursor.style.transform = `translate3d(${currentX}px, ${currentY}px, 0)`;
         requestAnimationFrame(render);
     };
 
