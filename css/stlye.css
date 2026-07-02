@@ -2290,3 +2290,392 @@ box-shadow: 0 6px 24px rgb(0 0 0 / 3%);
     .attractive-glow--orange,
     .attractive-glow--red { animation: none; }
 }
+
+/* ---- Quote enquiry modal ---- */
+.quote-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+}
+.quote-modal[hidden] { display: none; }
+
+.quote-modal-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(10, 6, 8, 0.72);
+    backdrop-filter: blur(8px);
+    animation: quoteFadeIn 0.3s ease;
+}
+
+.quote-modal-dialog {
+    position: relative;
+    z-index: 1;
+    width: min(920px, 100%);
+    max-height: calc(100dvh - 2rem);
+    overflow: hidden;
+    border-radius: 1.25rem;
+    background: #ffffff;
+    box-shadow:
+        0 0 0 1px rgba(255, 255, 255, 0.08),
+        0 32px 64px -16px rgba(0, 0, 0, 0.55),
+        0 0 80px -20px rgba(237, 33, 36, 0.25);
+    animation: quoteModalIn 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes quoteFadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+@keyframes quoteModalIn {
+    from {
+        opacity: 0;
+        transform: translateY(24px) scale(0.97);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.quote-modal-close {
+    position: absolute;
+    top: 0.875rem;
+    right: 0.875rem;
+    z-index: 5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    border: none;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.14);
+    color: #ffffff;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.2s ease;
+}
+.quote-modal-close:hover {
+    background: rgba(255, 255, 255, 0.24);
+    transform: scale(1.06);
+}
+
+.quote-modal-layout {
+    display: grid;
+    grid-template-columns: 1fr;
+    max-height: calc(100dvh - 2rem);
+}
+
+.quote-modal-aside {
+    display: none;
+    position: relative;
+    overflow: hidden;
+    background:
+        radial-gradient(ellipse 80% 60% at 20% 0%, rgba(237, 33, 36, 0.35) 0%, transparent 60%),
+        radial-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+        linear-gradient(155deg, #1a0c0d 0%, #2b0e10 55%, #4a0f15 100%);
+    background-size: auto, 20px 20px, 100% 100%;
+}
+.quote-modal-aside::after {
+    content: "";
+    position: absolute;
+    bottom: -40%;
+    right: -20%;
+    width: 280px;
+    height: 280px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(237, 33, 36, 0.2) 0%, transparent 70%);
+    pointer-events: none;
+}
+
+.quote-modal-aside-inner {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+    padding: 2.5rem 2rem;
+    color: #ffffff;
+}
+
+.quote-modal-badge {
+    display: inline-flex;
+    align-items: center;
+    width: fit-content;
+    padding: 0.35rem 0.85rem;
+    border-radius: 9999px;
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #fecaca;
+    background: rgba(237, 33, 36, 0.2);
+    border: 1px solid rgba(237, 33, 36, 0.35);
+}
+
+.quote-modal-aside-title {
+    margin-top: 1.25rem;
+    font-family: 'Suez One', serif;
+    font-size: 1.75rem;
+    line-height: 1.2;
+    color: #ffffff;
+}
+
+.quote-modal-aside-text {
+    margin-top: 0.75rem;
+    font-size: 0.875rem;
+    line-height: 1.65;
+    color: rgba(255, 255, 255, 0.72);
+}
+
+.quote-modal-perks {
+    margin-top: 1.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+    list-style: none;
+    padding: 0;
+}
+.quote-modal-perks li {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    font-size: 0.82rem;
+    color: rgba(255, 255, 255, 0.85);
+}
+.quote-modal-perk-ico {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 1.35rem;
+    height: 1.35rem;
+    border-radius: 50%;
+    background: rgba(237, 33, 36, 0.25);
+    color: #fca5a5;
+}
+.quote-modal-perk-ico svg { width: 0.75rem; height: 0.75rem; }
+
+.quote-modal-body {
+    overflow-y: auto;
+    padding: 1.25rem 1.25rem 1.5rem;
+    -webkit-overflow-scrolling: touch;
+}
+
+.quote-modal-mobile-head {
+    margin-bottom: 1.25rem;
+    padding-right: 2.5rem;
+}
+.quote-modal-mobile-title {
+    margin-top: 0.75rem;
+    font-family: 'Suez One', serif;
+    font-size: 1.5rem;
+    line-height: 1.2;
+    color: #1a1110;
+}
+.quote-modal-mobile-text {
+    margin-top: 0.4rem;
+    font-size: 0.82rem;
+    line-height: 1.55;
+    color: #64748b;
+}
+
+.quote-form-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.9rem;
+}
+
+.quote-field label {
+    display: block;
+    margin-bottom: 0.35rem;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: #334155;
+}
+.quote-field label span { color: #ed2124; }
+
+.quote-field input,
+.quote-field textarea,
+.quote-field select {
+    width: 100%;
+    padding: 0.7rem 0.9rem;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 0.65rem;
+    font-family: inherit;
+    font-size: 0.875rem;
+    color: #1e293b;
+    background: #f8fafc;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+    outline: none;
+}
+.quote-field input::placeholder,
+.quote-field textarea::placeholder { color: #94a3b8; }
+.quote-field input:focus,
+.quote-field textarea:focus,
+.quote-field select:focus {
+    border-color: #ed2124;
+    background: #ffffff;
+    box-shadow: 0 0 0 3px rgba(237, 33, 36, 0.12);
+}
+.quote-field textarea {
+    resize: vertical;
+    min-height: 96px;
+}
+
+.quote-select-wrap {
+    position: relative;
+}
+.quote-select-wrap select {
+    appearance: none;
+    padding-right: 2.25rem;
+    cursor: pointer;
+}
+.quote-select-arrow {
+    position: absolute;
+    right: 0.75rem;
+    top: 50%;
+    width: 1rem;
+    height: 1rem;
+    transform: translateY(-50%);
+    color: #94a3b8;
+    pointer-events: none;
+}
+
+.quote-submit {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    width: 100%;
+    margin-top: 1.1rem;
+    padding: 0.85rem 1.5rem;
+    border: none;
+    border-radius: 9999px;
+    font-family: inherit;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #ffffff;
+    background: linear-gradient(135deg, #ed2124 0%, #c41a1d 100%);
+    box-shadow: 0 8px 24px -6px rgba(237, 33, 36, 0.55);
+    cursor: pointer;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.quote-submit:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 14px 32px -8px rgba(237, 33, 36, 0.65);
+}
+.quote-submit:active { transform: translateY(0); }
+.quote-submit-icon { width: 1.1rem; height: 1.1rem; }
+.quote-submit.is-loading {
+    opacity: 0.75;
+    pointer-events: none;
+}
+.quote-submit.is-loading .quote-submit-text::after {
+    content: "...";
+    animation: quoteDots 1s steps(3, end) infinite;
+}
+@keyframes quoteDots {
+    0% { content: ""; }
+    33% { content: "."; }
+    66% { content: ".."; }
+    100% { content: "..."; }
+}
+
+.quote-success {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 2rem 1rem 1rem;
+    animation: quoteModalIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.quote-success[hidden] { display: none; }
+.quote-success-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 4rem;
+    height: 4rem;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+    color: #059669;
+}
+.quote-success-icon svg { width: 2rem; height: 2rem; }
+.quote-success-title {
+    margin-top: 1.25rem;
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: #1a1110;
+}
+.quote-success-text {
+    margin-top: 0.5rem;
+    max-width: 320px;
+    font-size: 0.875rem;
+    line-height: 1.6;
+    color: #64748b;
+}
+.quote-success-btn {
+    margin-top: 1.5rem;
+    padding: 0.7rem 2rem;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 9999px;
+    font-family: inherit;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #334155;
+    background: #ffffff;
+    cursor: pointer;
+    transition: border-color 0.2s ease, background 0.2s ease;
+}
+.quote-success-btn:hover {
+    border-color: #ed2124;
+    background: #fef2f2;
+    color: #ed2124;
+}
+
+@media (min-width: 640px) {
+    .quote-modal { padding: 1.5rem; }
+    .quote-modal-body { padding: 1.75rem 2rem 2rem; }
+    .quote-form-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+    .quote-field--full { grid-column: 1 / -1; }
+    .quote-modal-mobile-title { font-size: 1.65rem; }
+}
+
+@media (min-width: 768px) {
+    .quote-modal-layout {
+        grid-template-columns: 38% 1fr;
+    }
+    .quote-modal-aside { display: block; }
+    .quote-modal-mobile-head { display: none; }
+    .quote-modal-close {
+        background: rgba(0, 0, 0, 0.25);
+    }
+    .quote-modal-body {
+        max-height: calc(100dvh - 2rem);
+    }
+}
+
+@media (max-width: 767px) {
+    .quote-modal-close {
+        background: rgba(0, 0, 0, 0.06);
+        color: #64748b;
+    }
+    .quote-modal-close:hover {
+        background: rgba(237, 33, 36, 0.1);
+        color: #ed2124;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .quote-modal-backdrop,
+    .quote-modal-dialog,
+    .quote-success { animation: none; }
+    .quote-submit:hover { transform: none; }
+}

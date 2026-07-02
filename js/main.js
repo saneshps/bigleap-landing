@@ -396,3 +396,62 @@
         card.addEventListener('click', () => setOpen(card));
     });
 })();
+
+// ---- Quote enquiry modal ----
+(function () {
+    const modal = document.getElementById('quoteModal');
+    const form = document.getElementById('quoteForm');
+    const success = document.getElementById('quoteSuccess');
+    if (!modal || !form || !success) return;
+
+    const open = () => {
+        form.hidden = false;
+        success.hidden = true;
+        form.reset();
+        modal.removeAttribute('hidden');
+        modal.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+        const first = form.querySelector('input, select, textarea');
+        requestAnimationFrame(() => first?.focus());
+    };
+
+    const close = () => {
+        modal.setAttribute('hidden', '');
+        modal.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+    };
+
+    document.querySelectorAll('a[href="#quote"]').forEach((link) => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            open();
+        });
+    });
+
+    modal.querySelectorAll('[data-quote-close]').forEach((el) => {
+        el.addEventListener('click', close);
+    });
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && !modal.hasAttribute('hidden')) close();
+    });
+
+    form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        if (!form.checkValidity()) {
+            form.reportValidity();
+            return;
+        }
+
+        const btn = form.querySelector('.quote-submit');
+        btn.classList.add('is-loading');
+        btn.disabled = true;
+
+        setTimeout(() => {
+            btn.classList.remove('is-loading');
+            btn.disabled = false;
+            form.hidden = true;
+            success.hidden = false;
+        }, 900);
+    });
+})();
