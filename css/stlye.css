@@ -1806,8 +1806,7 @@ box-shadow: 0 6px 24px rgb(0 0 0 / 3%);
     transition: box-shadow 0.4s ease, transform 0.4s ease;
 }
 
-.faq-card:hover,
-.faq-card:focus-within {
+.faq-card.is-open {
     background: linear-gradient(160deg, #fff7f3 0%, #fef2f2 100%);
     border-color: rgba(249, 115, 22, 0.25);
 }
@@ -1832,8 +1831,7 @@ box-shadow: 0 6px 24px rgb(0 0 0 / 3%);
     min-height: 0;
 }
 
-.faq-card:hover .faq-panel,
-.faq-card:focus-within .faq-panel {
+.faq-card.is-open .faq-panel {
     grid-template-rows: 1fr;
     opacity: 1;
     visibility: visible;
@@ -1874,7 +1872,7 @@ box-shadow: 0 6px 24px rgb(0 0 0 / 3%);
     }
 
     @media (hover: hover) {
-        .faq-card:hover {
+        .faq-card.is-open {
             flex: 2.15 1 0;
         }
     }

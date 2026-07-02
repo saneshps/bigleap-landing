@@ -375,3 +375,24 @@
         if (e.key === 'Escape' && !modal.hasAttribute('hidden')) close();
     });
 })();
+
+// ---- FAQ accordion (always one card open) ----
+(function () {
+    const grid = document.querySelector('.faq-grid');
+    if (!grid) return;
+
+    const cards = [...grid.querySelectorAll('.faq-card')];
+    if (!cards.length) return;
+
+    const setOpen = (card) => {
+        cards.forEach((c) => c.classList.toggle('is-open', c === card));
+    };
+
+    setOpen(cards[0]);
+
+    cards.forEach((card) => {
+        card.addEventListener('mouseenter', () => setOpen(card));
+        card.addEventListener('focusin', () => setOpen(card));
+        card.addEventListener('click', () => setOpen(card));
+    });
+})();
