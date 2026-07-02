@@ -2284,7 +2284,7 @@ box-shadow: 0 6px 24px rgb(0 0 0 / 3%);
     transition: background 0.2s ease, transform 0.2s ease;
 }
 .quote-modal-close:hover {
-    background: rgba(255, 255, 255, 0.24);
+    background: rgb(226 31 34 / 92%);
     transform: scale(1.06);
 }
 
@@ -2597,6 +2597,13 @@ box-shadow: 0 6px 24px rgb(0 0 0 / 3%);
 }
 
 @media (max-width: 767px) {
+   
+    .mobile-button
+    {
+        width: 60%;
+        margin-left: auto;
+        margin-right: auto;
+    }
     .quote-modal {
         padding: 10px;
         align-items: stretch;
