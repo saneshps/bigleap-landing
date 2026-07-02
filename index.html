@@ -5,14 +5,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BigLeap Landing</title>
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="preload" href="./img/bigleap-logo.png" as="image">
+    <link rel="preload" href="img/desktop-video.webm" as="video" type="video/webm">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preconnect" href="https://www.youtube.com">
-    <link rel="preconnect" href="https://www.google.com">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Suez+One&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css">
-   <link rel="stylesheet" href="./css/stlye.css">
+    <link rel="stylesheet" href="./css/stlye.css">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
  
 </head>
 
@@ -26,7 +27,7 @@
                 <div class="header-inner flex items-center justify-between gap-2 py-3 transition-all duration-300 sm:gap-4 sm:py-5">
                     <!-- Logo -->
                     <a href="#" class="flex shrink-0 items-center">
-                        <img src="./img/bigleap-logo.png" alt="BigLeap Landing" class="logo-img h-10 w-auto drop-shadow-md transition-all duration-300 sm:h-16 lg:h-20">
+                        <img src="./img/bigleap-logo.png" alt="BigLeap Landing" width="160" height="80" fetchpriority="high" decoding="async" class="logo-img h-10 w-auto drop-shadow-md transition-all duration-300 sm:h-16 lg:h-20">
                     </a>
 
                     <!-- Contact info -->
@@ -66,7 +67,7 @@
         <!-- End Header -->
 
         <!-- Video (fills the hero) -->
-        <video src="img/desktop-video.webm" autoplay muted loop playsinline
+        <video src="img/desktop-video.webm" autoplay muted loop playsinline preload="auto"
             class="absolute inset-0 h-full w-full object-cover"></video>
         <!-- <video src="img/Bigleap_Intro.mp4" autoplay muted loop playsinline
             class="absolute inset-0 h-full w-full object-cover"></video> -->
@@ -1151,11 +1152,20 @@
                 </div>
             </div>
         </div>
+
     </footer>
-    <script>document.getElementById('footerYear').textContent = new Date().getFullYear();</script>
-        <!-- End Footer section --> 
-         <!-- JS -->
-         <script src="./js/main.js"></script>
+        <!-- End Footer section -->
+
+    <!-- Back to top -->
+    <button id="backToTop" class="back-to-top-btn" type="button" aria-label="Back to top">
+        <span class="back-to-top-shine" aria-hidden="true"></span>
+        <svg class="back-to-top-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path class="back-to-top-arrow-line" d="M12 18V6" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+            <path class="back-to-top-arrow-head" d="m8 10 4-4 4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+    </button>
+
+         <script src="./js/main.js" defer></script>
 </body>
 
 </html>

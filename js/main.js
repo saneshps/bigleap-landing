@@ -1,5 +1,4 @@
-  // Shared responsive slider (swipe, autoplay, dots, arrows)
-  function initSlider({ rootId, trackId, dotsId, viewportSel, slidesHtml, perView, autoMs = 4500, autoHeight = false }) {
+function initSlider({ rootId, trackId, dotsId, viewportSel, slidesHtml, perView, autoMs = 4500, autoHeight = false }) {
     const root = document.getElementById(rootId);
     const track = document.getElementById(trackId);
     const dotsWrap = document.getElementById(dotsId);
@@ -10,10 +9,9 @@
     const viewport = root.querySelector(viewportSel);
     track.innerHTML = slidesHtml;
     const slides = [...track.children];
-
     if (autoHeight) track.classList.add('slider-track--auto-height');
 
-    let index = 0, pv = perView();
+    let index = 0, pv = perView(), timer, startX = 0, deltaX = 0, dragging = false;
     const maxIndex = () => Math.max(0, slides.length - pv);
     const slideW = () => viewport.clientWidth / pv;
     const syncHeight = () => {
@@ -27,11 +25,9 @@
             track.style.transform = `translateX(${-(index * slideW()) + offsetPx}px)`;
             return;
         }
-        if (offsetPx) {
-            track.style.transform = `translateX(calc(-${index * (100 / pv)}% + ${(offsetPx / viewport.offsetWidth) * 100}%))`;
-        } else {
-            track.style.transform = `translateX(-${index * (100 / pv)}%)`;
-        }
+        track.style.transform = offsetPx
+            ? `translateX(calc(-${index * (100 / pv)}% + ${(offsetPx / viewport.offsetWidth) * 100}%))`
+            : `translateX(-${index * (100 / pv)}%)`;
     };
     const update = () => {
         setTransform(0);
@@ -59,8 +55,6 @@
         }
     };
     const go = (dir) => { index = Math.min(Math.max(index + dir, 0), maxIndex()); update(); };
-
-    let timer;
     const stopAuto = () => { if (timer) { clearInterval(timer); timer = null; } };
     const startAuto = () => { stopAuto(); timer = setInterval(() => { index = index >= maxIndex() ? 0 : index + 1; update(); }, autoMs); };
     const restartAuto = () => startAuto();
@@ -70,13 +64,8 @@
     ['mouseenter', 'focusin'].forEach((e) => root.addEventListener(e, stopAuto));
     ['mouseleave', 'focusout'].forEach((e) => root.addEventListener(e, startAuto));
 
-    let startX = 0, deltaX = 0, dragging = false;
     const onDown = (x) => { dragging = true; startX = x; deltaX = 0; viewport.classList.add('is-dragging'); stopAuto(); };
-    const onMove = (x) => {
-        if (!dragging) return;
-        deltaX = x - startX;
-        setTransform(deltaX);
-    };
+    const onMove = (x) => { if (dragging) { deltaX = x - startX; setTransform(deltaX); } };
     const onUp = () => {
         if (!dragging) return;
         dragging = false;
@@ -96,11 +85,7 @@
     viewport.addEventListener('touchend', onUp);
     track.addEventListener('click', (e) => { if (Math.abs(deltaX) > 5) e.preventDefault(); }, true);
     window.addEventListener('resize', () => { buildDots(); layout(); syncHeight(); });
-
-    root.querySelectorAll('img').forEach((img) => {
-        if (img.complete) return;
-        img.addEventListener('load', syncHeight);
-    });
+    root.querySelectorAll('img').forEach((img) => { if (!img.complete) img.addEventListener('load', syncHeight); });
 
     if (autoHeight && 'ResizeObserver' in window) {
         const ro = new ResizeObserver(() => syncHeight());
@@ -118,43 +103,28 @@
 
 (function () {
     const header = document.getElementById('siteHeader');
-    const onScroll = () => {
-        header.classList.toggle('scrolled', window.scrollY > 40);
-    };
+    if (!header) return;
+    const onScroll = () => header.classList.toggle('scrolled', window.scrollY > 40);
     onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
 })();
 
-// Animated count-up numbers (runs when the section scrolls into view)
 (function () {
     const nums = document.querySelectorAll('.count-num');
     if (!nums.length) return;
 
-    const formatNumber = (n) => n.toLocaleString('en-US');
-
     const animate = (el) => {
         const target = parseFloat(el.dataset.countTo) || 0;
         const suffix = el.dataset.suffix || '';
-        const duration = 2000;
         const start = performance.now();
-
-        // cancel any in-flight animation before starting a new one
         if (el._countRAF) cancelAnimationFrame(el._countRAF);
-
         const tick = (now) => {
-            const progress = Math.min((now - start) / duration, 1);
-            // easeOutCubic for a smooth finish
+            const progress = Math.min((now - start) / 2000, 1);
             const eased = 1 - Math.pow(1 - progress, 3);
-            const value = Math.round(target * eased);
-            el.textContent = formatNumber(value) + suffix;
+            el.textContent = Math.round(target * eased).toLocaleString('en-US') + suffix;
             if (progress < 1) el._countRAF = requestAnimationFrame(tick);
         };
         el._countRAF = requestAnimationFrame(tick);
-    };
-
-    const reset = (el) => {
-        if (el._countRAF) cancelAnimationFrame(el._countRAF);
-        el.textContent = '0' + (el.dataset.suffix || '');
     };
 
     if (!('IntersectionObserver' in window)) {
@@ -163,19 +133,11 @@
     }
 
     const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-                animate(entry.target);
-            } else {
-                reset(entry.target);
-            }
-        });
+        entries.forEach((entry) => { if (entry.isIntersecting) animate(entry.target); });
     }, { threshold: 0.4 });
-
     nums.forEach((el) => observer.observe(el));
 })();
 
-// ---- Services slider ----
 (function () {
     const services = [
         { title: '2D Animation', text: 'Thinking of incorporating 2D animation into your marketing strategy? We are the trusted 2D animation company in Dubai.', img: 'img/services/2D-animation.webp' },
@@ -204,23 +166,15 @@
                 </div>
             </article>
         </div>`).join(''),
-        perView: () => {
-            const w = window.innerWidth;
-            if (w >= 1280) return 4;
-            if (w >= 1024) return 3;
-            if (w >= 640) return 2;
-            return 1;
-        },
+        perView: () => window.innerWidth >= 1280 ? 4 : window.innerWidth >= 1024 ? 3 : window.innerWidth >= 640 ? 2 : 1,
         autoMs: 4500
     });
 })();
 
-// ---- Industries row (squircle thumbnails + scroll reveal) ----
 (function () {
     const grid = document.getElementById('indGrid');
     if (!grid) return;
 
-    // Industries — swap images/labels freely.
     const industries = [
         { label: 'Architecture', img: 'img/industry/Architecture.webp' },
         { label: 'Automotive', img: 'img/industry/Automotive.webp' },
@@ -241,13 +195,11 @@
         </div>
     `).join('');
 
-    const items = Array.from(grid.querySelectorAll('.ind-item'));
-    const reveal = () => {
-        items.forEach((el, i) => {
-            el.style.transitionDelay = (i * 0.09) + 's';
-            el.classList.add('in-view');
-        });
-    };
+    const items = [...grid.querySelectorAll('.ind-item')];
+    const reveal = () => items.forEach((el, i) => {
+        el.style.transitionDelay = (i * 0.09) + 's';
+        el.classList.add('in-view');
+    });
 
     if ('IntersectionObserver' in window) {
         const io = new IntersectionObserver((entries, obs) => {
@@ -259,17 +211,14 @@
     }
 })();
 
-/* ---- Offers & Attractive section scroll reveal ---- */
 (function () {
     document.querySelectorAll('#offers, #attractive').forEach((section) => {
-        const items = Array.from(section.querySelectorAll('.offer-reveal'));
+        const items = [...section.querySelectorAll('.offer-reveal')];
         if (!items.length) return;
-
         const reveal = () => items.forEach((el, i) => {
             el.style.transitionDelay = (i * 0.15) + 's';
             el.classList.add('in-view');
         });
-
         if ('IntersectionObserver' in window) {
             const io = new IntersectionObserver((entries, obs) => {
                 if (entries.some((e) => e.isIntersecting)) { reveal(); obs.disconnect(); }
@@ -281,15 +230,12 @@
     });
 })();
 
-
-
-// ---- Testimonials new slider (speech bubble) ----
 (function () {
     const items = [
         { name: 'Mr. Horst Flaig', role: 'CEO of Flaig Magnetsysteme', img: './img/testimonials/flaig.webp', rating: 5, text: "We had the pleasure of working with BigLeap for our animated explanatory video at Flaig Magnetsysteme, and we couldn't be happier with the results! From start to finish, their team was professional, creative, and attentive to our needs. The final video perfectly captures our message in an engaging and clear way, helping us communicate more effectively with our audience. We highly recommend BigLeap to anyone looking for top-quality animation and excellent service. Thank you, BigLeap, for your fantastic work." },
         { name: 'Mr. Prithviraj', role: 'Rackovan - Director', img: './img/testimonials/prithviraj.webp', rating: 5, text: "It's been 3 years with them and they never disappointed us. Their proactive approach, exceptional team skills, and attention to detail continuously exceeded our expectations. And also helped us to accelerate business growth." },
         { name: 'Mr. Katariya', role: 'Director - Hytek Marketing', img: './img/testimonials/katariya.webp', rating: 5, text: "We are really impressed with their SEO work. They helped to bring a tremendous change in Google's ranking and also helped to increase conversion." },
-        { name: 'Mr. Basanth Raghavan', role: 'Managing Director - YES Machinery', img: './img/testimonials/basanth-raghavan.webp', rating: 5, text: "We have a great business relationship with BigLeap. A dynamic animation studio driven by creative minds that bring your ideas and vision to life. Absolutely impressed by their animation services, they've done a fantastic job in redesigning our website." },
+        { name: 'Mr. Basanth Raghavan', role: 'Managing Director - YES Machinery', img: './img/testimonials/basanth-raghavan.webp', rating: 5, text: "We have a great business relationship with BigLeap. A dynamic animation studio driven by creative minds that bring your ideas and vision to life. Absolutely impressed by their animation services, they've done a fantastic job in redesigning our website." }
     ];
     const stars = (n) => Array.from({ length: 5 }, (_, i) =>
         `<svg viewBox="0 0 20 20" fill="currentColor" class="${i < n ? 'on' : 'off'}"><path d="M10 1.5l2.6 5.3 5.9.86-4.25 4.14 1 5.86L10 15.9l-5.25 2.76 1-5.86L1.5 7.66l5.9-.86L10 1.5z"/></svg>`
@@ -325,7 +271,6 @@
     });
 })();
 
-// ---- YouTube portfolio modal ----
 (function () {
     const modal = document.getElementById('ytModal');
     const videoWrap = modal?.querySelector('.yt-modal-video');
@@ -342,54 +287,38 @@
         modal.removeAttribute('hidden');
         modal.setAttribute('aria-hidden', 'false');
         document.body.style.overflow = 'hidden';
-
         const startParam = start > 0 ? `&start=${start}` : '';
-        const safeTitle = title.replace(/"/g, '&quot;');
         videoWrap.innerHTML = `
             <div class="yt-modal-loading" aria-hidden="true">
                 <span class="yt-modal-spinner"></span>
             </div>
-            <iframe src="https://www.youtube.com/embed/${id}?autoplay=1&rel=0${startParam}" title="${safeTitle}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`;
-
+            <iframe src="https://www.youtube.com/embed/${id}?autoplay=1&rel=0${startParam}" title="${title.replace(/"/g, '&quot;')}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`;
         videoWrap.querySelector('iframe')?.addEventListener('load', () => {
             videoWrap.querySelector('.yt-modal-loading')?.remove();
         }, { once: true });
-
         modal.querySelector('.yt-modal-close')?.focus();
     };
 
     document.querySelectorAll('[data-yt-open]').forEach((btn) => {
         btn.addEventListener('click', () => {
             const id = btn.getAttribute('data-yt-id');
-            const start = parseInt(btn.getAttribute('data-yt-start') || '0', 10);
-            const title = btn.querySelector('.youtube-card-title')?.textContent?.trim() || 'Video';
-            if (id) open(id, title, start);
+            if (!id) return;
+            open(id, btn.querySelector('.youtube-card-title')?.textContent?.trim() || 'Video', parseInt(btn.getAttribute('data-yt-start') || '0', 10));
         });
     });
-
-    modal.querySelectorAll('[data-yt-close]').forEach((el) => {
-        el.addEventListener('click', close);
-    });
-
+    modal.querySelectorAll('[data-yt-close]').forEach((el) => el.addEventListener('click', close));
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape' && !modal.hasAttribute('hidden')) close();
     });
 })();
 
-// ---- FAQ accordion (always one card open) ----
 (function () {
     const grid = document.querySelector('.faq-grid');
     if (!grid) return;
-
     const cards = [...grid.querySelectorAll('.faq-card')];
     if (!cards.length) return;
-
-    const setOpen = (card) => {
-        cards.forEach((c) => c.classList.toggle('is-open', c === card));
-    };
-
+    const setOpen = (card) => cards.forEach((c) => c.classList.toggle('is-open', c === card));
     setOpen(cards[0]);
-
     cards.forEach((card) => {
         card.addEventListener('mouseenter', () => setOpen(card));
         card.addEventListener('focusin', () => setOpen(card));
@@ -397,7 +326,6 @@
     });
 })();
 
-// ---- Quote enquiry modal ----
 (function () {
     const modal = document.getElementById('quoteModal');
     const form = document.getElementById('quoteForm');
@@ -411,10 +339,8 @@
         modal.removeAttribute('hidden');
         modal.setAttribute('aria-hidden', 'false');
         document.body.style.overflow = 'hidden';
-        const first = form.querySelector('input, select, textarea');
-        requestAnimationFrame(() => first?.focus());
+        requestAnimationFrame(() => form.querySelector('input, select, textarea')?.focus());
     };
-
     const close = () => {
         modal.setAttribute('hidden', '');
         modal.setAttribute('aria-hidden', 'true');
@@ -422,31 +348,18 @@
     };
 
     document.querySelectorAll('a[href="#quote"]').forEach((link) => {
-        link.addEventListener('click', (e) => {
-            e.preventDefault();
-            open();
-        });
+        link.addEventListener('click', (e) => { e.preventDefault(); open(); });
     });
-
-    modal.querySelectorAll('[data-quote-close]').forEach((el) => {
-        el.addEventListener('click', close);
-    });
-
+    modal.querySelectorAll('[data-quote-close]').forEach((el) => el.addEventListener('click', close));
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape' && !modal.hasAttribute('hidden')) close();
     });
-
     form.addEventListener('submit', (e) => {
         e.preventDefault();
-        if (!form.checkValidity()) {
-            form.reportValidity();
-            return;
-        }
-
+        if (!form.checkValidity()) { form.reportValidity(); return; }
         const btn = form.querySelector('.quote-submit');
         btn.classList.add('is-loading');
         btn.disabled = true;
-
         setTimeout(() => {
             btn.classList.remove('is-loading');
             btn.disabled = false;
@@ -454,4 +367,35 @@
             success.hidden = false;
         }, 900);
     });
+})();
+
+(function () {
+    const year = document.getElementById('footerYear');
+    if (year) year.textContent = new Date().getFullYear();
+})();
+
+(function () {
+    const btn = document.getElementById('backToTop');
+    if (!btn) return;
+
+    const showAfter = 400;
+    let wasVisible = false;
+
+    const update = () => {
+        const visible = window.scrollY > showAfter;
+        if (visible !== wasVisible) {
+            btn.classList.toggle('is-visible', visible);
+            btn.setAttribute('aria-hidden', visible ? 'false' : 'true');
+            wasVisible = visible;
+        }
+    };
+
+    btn.addEventListener('click', () => {
+        btn.classList.add('is-launching');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        setTimeout(() => btn.classList.remove('is-launching'), 700);
+    });
+
+    update();
+    window.addEventListener('scroll', update, { passive: true });
 })();
