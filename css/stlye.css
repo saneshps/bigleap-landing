@@ -1752,21 +1752,11 @@ box-shadow: 0 6px 24px rgb(0 0 0 / 3%);
     position: relative;
     overflow: hidden;
     padding: 4rem 0;
-    background-color: #0a0607;
-    background-image:
-        radial-gradient(ellipse 70% 50% at 15% 30%, rgba(139, 21, 21, 0.22) 0%, transparent 60%),
-        radial-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-        linear-gradient(165deg, #080506 0%, #120a0b 45%, #1a0c0d 100%);
-    background-size: 100% 100%, 22px 22px, 100% 100%;
+    background-color: #ffffff;
 }
 
 .faq-glow {
-    position: absolute;
-    border-radius: 9999px;
-    filter: blur(100px);
-    opacity: 0.45;
-    pointer-events: none;
-    z-index: 0;
+    display: none;
 }
 .faq-glow--left {
     width: 420px;
@@ -1794,7 +1784,7 @@ box-shadow: 0 6px 24px rgb(0 0 0 / 3%);
     font-family: 'Suez One', serif;
     font-size: clamp(2rem, 4.5vw, 3.25rem);
     line-height: 1.15;
-    color: #ffffff;
+    color: #1a1110;
     margin-bottom: 2.5rem;
 }
 
@@ -1807,29 +1797,26 @@ box-shadow: 0 6px 24px rgb(0 0 0 / 3%);
     align-self: stretch;
     min-width: 0;
     padding: 1.35rem 1.25rem;
-    border: 1px solid rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(249, 115, 22, 0.12);
     border-radius: 1rem;
-    background: rgba(255, 255, 255, 0.04);
-    backdrop-filter: blur(10px);
+    background: #ffffff;
     cursor: default;
     outline: none;
-    transition: flex 0.45s ease, background 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
+    box-shadow: 0 4px 24px -4px rgba(249, 115, 22, 0.12), 0 28px 60px -28px rgba(239, 68, 68, 0.22), 0 0 48px -12px rgba(249, 115, 22, 0.18);
+    transition: box-shadow 0.4s ease, transform 0.4s ease;
 }
 
 .faq-card:hover,
 .faq-card:focus-within {
-    background: rgba(255, 255, 255, 0.06);
-    border-color: rgba(255, 255, 255, 0.22);
-    box-shadow:
-        0 0 48px rgba(139, 21, 21, 0.2),
-        inset 0 0 80px rgba(139, 21, 21, 0.06);
+    background: linear-gradient(160deg, #fff7f3 0%, #fef2f2 100%);
+    border-color: rgba(249, 115, 22, 0.25);
 }
 
 .faq-q {
     font-size: 0.9375rem;
     font-weight: 600;
     line-height: 1.45;
-    color: #ffffff;
+    color: #1a1110;
 }
 
 .faq-panel {
@@ -1856,7 +1843,7 @@ box-shadow: 0 6px 24px rgb(0 0 0 / 3%);
     margin-top: 0.85rem;
     font-size: 0.8125rem;
     line-height: 1.7;
-    color: rgba(255, 255, 255, 0.72);
+    color: #4b4344;
 }
 
 .faq-highlight {
