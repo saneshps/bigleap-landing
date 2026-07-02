@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BigLeap Landing</title>
     <link rel="preload" href="./img/bigleap-logo.png" as="image">
+    <link rel="preload" href="./img/cursor.webp" as="image">
     <link rel="preload" href="img/desktop-video.webm" as="video" type="video/webm">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -18,6 +19,10 @@
 </head>
 
 <body class="bg-gray-100">
+
+    <div id="customCursor" class="custom-cursor" aria-hidden="true">
+        <img src="./img/cursor.webp" alt="" width="32" height="32" decoding="async" draggable="false">
+    </div>
 
     <!-- Hero with overlapping header -->
     <section class="relative min-h-[88vh] overflow-hidden sm:min-h-[80vh] lg:min-h-screen">

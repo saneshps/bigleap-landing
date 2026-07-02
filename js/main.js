@@ -375,6 +375,46 @@ function initSlider({ rootId, trackId, dotsId, viewportSel, slidesHtml, perView,
 })();
 
 (function () {
+    const cursor = document.getElementById('customCursor');
+    if (!cursor || !window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+
+    const offsetX = 18;
+    const offsetY = 18;
+    let x = -100;
+    let y = -100;
+    let visible = false;
+
+    const show = () => {
+        if (visible) return;
+        visible = true;
+        cursor.classList.add('is-visible');
+    };
+
+    const hide = () => {
+        if (!visible) return;
+        visible = false;
+        cursor.classList.remove('is-visible');
+    };
+
+    const onMove = (e) => {
+        x = e.clientX + offsetX;
+        y = e.clientY + offsetY;
+        show();
+    };
+
+    const render = () => {
+        cursor.style.transform = `translate3d(${x}px, ${y}px, 0)`;
+        requestAnimationFrame(render);
+    };
+
+    document.addEventListener('mousemove', onMove, { passive: true });
+    document.addEventListener('mouseleave', hide);
+    document.addEventListener('mouseenter', show);
+
+    requestAnimationFrame(render);
+})();
+
+(function () {
     const btn = document.getElementById('backToTop');
     if (!btn) return;
 
