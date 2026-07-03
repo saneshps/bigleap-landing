@@ -185,7 +185,7 @@ function initSlider({ rootId, trackId, dotsId, viewportSel, slidesHtml, perView,
     ];
 
     grid.innerHTML = industries.map((it) => `
-        <div class="ind-item w-[calc(50%-0.75rem)] sm:w-[calc(33.333%-1.334rem)] lg:w-[calc(25%-1.5rem)]">
+        <div class="ind-item w-[calc(50%-0.75rem)] sm:w-[calc(30%-1.334rem)] md:w-[calc(22%-1.334rem)] lg:w-[calc(15%-1.5rem)]">
             <a href="#contact" class="ind-card group flex flex-col items-center text-center">
                 <div class="ind-thumb aspect-square w-full ring-1 ring-white/10">
                     <img src="${it.img}" alt="${it.label}" loading="lazy" class="h-full w-full object-cover" />
