@@ -2660,3 +2660,71 @@ box-shadow: 0 6px 24px rgb(0 0 0 / 3%);
     .quote-success { animation: none; }
     .quote-submit:hover { transform: none; }
 }
+
+.container {
+    @media (width >= 70rem) {
+        max-width: 70rem;
+    }
+}
+
+.container {
+    @media (width >= 80rem) {
+        max-width: 72rem;
+    }
+}
+
+
+.container {
+    @media (width >= 90rem) {
+        max-width: 90%;
+    }
+}
+
+.container {
+    @media (width >= 100rem) {
+        max-width: 90%;
+    }
+}
+
+.container {
+    @media (width >= 110rem) {
+        max-width: 90%;
+    }
+}
+
+
+@media (width: 1680px) {
+    .container {
+        max-width: 90%;
+    }
+}
+
+
+@media (width: 1920px) {
+    .container {
+        max-width: 90%;
+    }
+}
+
+
+@media (width: 2000px) {
+    .container {
+        max-width: 90%;
+    }
+}
+
+@media (width: 2560px) {
+    .container {
+        max-width: 90%;
+    }
+}
+@media (width: 3840px) {
+    .container {
+        max-width: 90%;
+    }
+}
+@media (width: 4096px) {
+    .container {
+        max-width: 90%;
+    }
+}
