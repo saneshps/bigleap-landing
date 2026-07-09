@@ -140,14 +140,12 @@ function initSlider({ rootId, trackId, dotsId, viewportSel, slidesHtml, perView,
 
 (function () {
     const services = [
-        { title: '2D Animation', text: 'Thinking of incorporating 2D animation into your marketing strategy? We are the trusted 2D animation company in Dubai.', img: 'img/services/2D-animation.webp' },
-        { title: '3D Animation', text: 'Ready to unfold your story in motion? Elevate your brand with realistic and immersive 3D animation that will bring your vision to life.', img: 'img/services/3D.webp' },
-        { title: 'Product Animation', text: 'Want to showcase your product in a way that will capture your audience? We help you create compelling product animations.', img: 'img/services/product.webp' },
-        { title: 'Character Design', text: 'Bring your characters to life with expert character designing and rigging. We turn concepts into reality, animating characters to motion.', img: 'img/services/Character-design.webp' },
-        { title: '2D Animation', text: 'Thinking of incorporating 2D animation into your marketing strategy? We are the trusted 2D animation company in Dubai.', img: 'img/services/2D-animation.webp' },
-        { title: '3D Animation', text: 'Ready to unfold your story in motion? Elevate your brand with realistic and immersive 3D animation that will bring your vision to life.', img: 'img/services/3D.webp' },
-        { title: 'Product Animation', text: 'Want to showcase your product in a way that will capture your audience? We help you create compelling product animations.', img: 'img/services/product.webp' }
-    ];
+        { title: '2D Animation', text: '2D animation brings matchless brand character into any brand. As a 2D animation agency, we focus on building the exact 2D aesthetic that would make your brand stand out.', img: 'img/services/2D-animation.webp' },
+        { title: '3D Animation', text: 'A cutting-edge 3D brand image means immeasurable depth and sophistication to your brand identity. With our tailored 3D animation services, you can create your own brand presence anywhere in the world and stand out.', img: 'img/services/3D.webp' },
+        { title: 'Product Animation', text: 'Taking the scope of your product above and beyond with advanced 3D product animation services. If you’re looking for a know-it-all product animation company, look no further than Big Leap.', img: 'img/services/product.webp' },
+        { title: 'Character Design', text: 'Bring your characters to life with expert character designing and rigging. We turn concepts into reality, animating characters to move. ', img: 'img/services/Character-design.webp' },
+        { title: 'Product Explainer Videos', text: 'Maybe your product/service needs to be explained to your target audience. As a product explanation video company, we follow a comprehensive approach across understanding your product/service to shooting and editing an explainer video that covers everything from brand tone to visibility.', img: 'img/services/2D-animation.webp' }
+];
 
     initSlider({
         rootId: 'serviceSlider',
