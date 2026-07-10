@@ -2463,6 +2463,34 @@ box-shadow: 0 6px 24px rgb(0 0 0 / 3%);
     min-height: 96px;
 }
 
+.quote-field.is-invalid input,
+.quote-field.is-invalid textarea,
+.quote-field.is-invalid select {
+    border-color: #ed2124;
+    background: #fff5f5;
+    box-shadow: 0 0 0 3px rgba(237, 33, 36, 0.1);
+}
+.quote-field-error {
+    margin: 0.3rem 0 0;
+    font-size: 0.72rem;
+    font-weight: 500;
+    line-height: 1.4;
+    color: #ed2124;
+}
+.quote-field-error[hidden] { display: none; }
+
+.quote-form-alert {
+    margin: 0.75rem 0 0;
+    padding: 0.65rem 0.85rem;
+    border-radius: 0.5rem;
+    font-size: 0.8rem;
+    line-height: 1.45;
+    color: #b91c1c;
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+}
+.quote-form-alert[hidden] { display: none; }
+
 .quote-select-wrap {
     position: relative;
 }

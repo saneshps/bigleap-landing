@@ -178,19 +178,19 @@
                     <div class="quote-form-grid">
                         <div class="quote-field quote-field--full">
                             <label for="quoteFirstName">Full Name <span aria-hidden="true">*</span></label>
-                            <input type="text" id="quoteFirstName" name="firstName" placeholder="John" required autocomplete="given-name">
+                            <input type="text" id="quoteFirstName" name="firstName" placeholder="John Doe" required autocomplete="name" minlength="2" maxlength="100">
                         </div> 
                         <div class="quote-field">
                             <label for="quoteEmail">Email <span aria-hidden="true">*</span></label>
-                            <input type="email" id="quoteEmail" name="email" placeholder="john@company.com" required autocomplete="email">
+                            <input type="email" id="quoteEmail" name="email" placeholder="john@company.com" required autocomplete="email" maxlength="254">
                         </div>
                         <div class="quote-field">
                             <label for="quoteMobile">Mobile Number <span aria-hidden="true">*</span></label>
-                            <input type="tel" id="quoteMobile" name="mobile" placeholder="+971 50 000 0000" required autocomplete="tel">
+                            <input type="tel" id="quoteMobile" name="mobile" placeholder="+971 50 000 0000" required autocomplete="tel" inputmode="tel" maxlength="20">
                         </div> 
                         <div class="quote-field quote-field--full">
                             <label for="quoteMessage">Message <span aria-hidden="true">*</span></label>
-                            <textarea id="quoteMessage" name="message" rows="3" placeholder="Tell us about your animation project, timeline, and goals..." required></textarea>
+                            <textarea id="quoteMessage" name="message" rows="3" placeholder="Tell us about your animation project, timeline, and goals..." required minlength="10" maxlength="2000"></textarea>
                         </div>
                     </div>
                     <button type="submit" class="quote-submit">

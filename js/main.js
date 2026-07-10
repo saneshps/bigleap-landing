@@ -325,19 +325,282 @@ function initSlider({ rootId, trackId, dotsId, viewportSel, slidesHtml, perView,
 })();
 
 (function () {
+    const QUOTE_FORM_CONFIG = {
+        web3formsAccessKey: '3c1a4604-1567-4183-aee4-919ff32790de',
+        gasWebappUrl: 'https://script.google.com/macros/s/AKfycbwyhcKJ6xLJkKMX_yTl_5-SSsci-BX5G6OnSRpZsl-NG49gSEHldHHRLfLnQEXBwAUhpw/exec',
+        apiEndpoint: './api/quote-submit.php',
+        thankYouUrl: './thankyou.html'
+    };
+
+    const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
+    const NAME_RE = /^[\p{L}\s'.-]{2,100}$/u;
+    const PHONE_DIGITS_MIN = 7;
+    const PHONE_DIGITS_MAX = 15;
+    const MESSAGE_MIN = 10;
+    const MESSAGE_MAX = 2000;
+
+    const validators = {
+        firstName(value) {
+            const v = value.trim();
+            if (!v) return 'Please enter your full name.';
+            if (v.length < 2) return 'Name must be at least 2 characters.';
+            if (!NAME_RE.test(v)) return 'Name can only contain letters, spaces, hyphens, and apostrophes.';
+            return '';
+        },
+        email(value) {
+            const v = value.trim();
+            if (!v) return 'Please enter your email address.';
+            if (!EMAIL_RE.test(v)) return 'Please enter a valid email address.';
+            return '';
+        },
+        mobile(value) {
+            const v = value.trim();
+            if (!v) return 'Please enter your mobile number.';
+            const digits = v.replace(/\D/g, '');
+            if (digits.length < PHONE_DIGITS_MIN || digits.length > PHONE_DIGITS_MAX) {
+                return 'Please enter a valid mobile number (7–15 digits).';
+            }
+            return '';
+        },
+        message(value) {
+            const v = value.trim();
+            if (!v) return 'Please enter a message.';
+            if (v.length < MESSAGE_MIN) return `Message must be at least ${MESSAGE_MIN} characters.`;
+            if (v.length > MESSAGE_MAX) return `Message must be under ${MESSAGE_MAX} characters.`;
+            return '';
+        }
+    };
+
     const modal = document.getElementById('quoteModal');
     const form = document.getElementById('quoteForm');
-    const success = document.getElementById('quoteSuccess');
-    if (!modal || !form || !success) return;
+    if (!form) return;
 
+    const fields = {
+        firstName: form.querySelector('[name="firstName"]'),
+        email: form.querySelector('[name="email"]'),
+        mobile: form.querySelector('[name="mobile"]'),
+        message: form.querySelector('[name="message"]')
+    };
+
+    const ensureErrorEl = (input) => {
+        const wrap = input.closest('.quote-field');
+        if (!wrap) return null;
+        let err = wrap.querySelector('.quote-field-error');
+        if (!err) {
+            err = document.createElement('p');
+            err.className = 'quote-field-error';
+            err.setAttribute('role', 'alert');
+            err.id = input.id + '-error';
+            wrap.appendChild(err);
+            input.setAttribute('aria-describedby', err.id);
+        }
+        return err;
+    };
+
+    const setFieldError = (input, message) => {
+        const wrap = input.closest('.quote-field');
+        const err = ensureErrorEl(input);
+        if (!wrap || !err) return;
+        const invalid = Boolean(message);
+        wrap.classList.toggle('is-invalid', invalid);
+        input.setAttribute('aria-invalid', invalid ? 'true' : 'false');
+        err.textContent = message;
+        err.hidden = !invalid;
+    };
+
+    const clearFieldError = (input) => setFieldError(input, '');
+
+    const validateField = (name) => {
+        const input = fields[name];
+        if (!input || !validators[name]) return true;
+        const message = validators[name](input.value);
+        setFieldError(input, message);
+        return !message;
+    };
+
+    const validateForm = () => {
+        let firstInvalid = null;
+        let valid = true;
+        Object.keys(validators).forEach((name) => {
+            if (!validateField(name)) {
+                valid = false;
+                if (!firstInvalid) firstInvalid = fields[name];
+            }
+        });
+        if (firstInvalid) firstInvalid.focus();
+        return valid;
+    };
+
+    const getFormData = () => ({
+        firstName: fields.firstName.value.trim(),
+        email: fields.email.value.trim(),
+        mobile: fields.mobile.value.trim(),
+        message: fields.message.value.trim()
+    });
+
+    const ensureFormAlert = () => {
+        let alert = form.querySelector('.quote-form-alert');
+        if (!alert) {
+            alert = document.createElement('p');
+            alert.className = 'quote-form-alert';
+            alert.setAttribute('role', 'alert');
+            form.insertBefore(alert, form.querySelector('.quote-submit'));
+        }
+        return alert;
+    };
+
+    const setFormAlert = (message) => {
+        const alert = ensureFormAlert();
+        alert.textContent = message;
+        alert.hidden = !message;
+    };
+
+    const submitToGas = async (data) => {
+        const url = QUOTE_FORM_CONFIG.gasWebappUrl;
+        if (!url) return;
+
+        const gasUrl = new URL(url);
+        Object.entries(data).forEach(([key, value]) => gasUrl.searchParams.set(key, value));
+
+        try {
+            await fetch(gasUrl.toString(), { method: 'GET', mode: 'no-cors' });
+        } catch (_) {
+            postToGasSheet(data);
+        }
+    };
+
+    const postToGasSheet = (data) => {
+        const url = QUOTE_FORM_CONFIG.gasWebappUrl;
+        if (!url) return;
+
+        const frameName = 'quoteGasFrame_' + Date.now();
+        const frame = document.createElement('iframe');
+        frame.name = frameName;
+        frame.hidden = true;
+        frame.setAttribute('aria-hidden', 'true');
+        document.body.appendChild(frame);
+
+        const tempForm = document.createElement('form');
+        tempForm.method = 'POST';
+        tempForm.action = url;
+        tempForm.target = frameName;
+        tempForm.style.display = 'none';
+
+        Object.entries(data).forEach(([key, value]) => {
+            const input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = key;
+            input.value = value;
+            tempForm.appendChild(input);
+        });
+
+        document.body.appendChild(tempForm);
+        tempForm.submit();
+        setTimeout(() => {
+            tempForm.remove();
+            frame.remove();
+        }, 5000);
+    };
+
+    const submitViaWeb3Forms = async (data) => {
+        const response = await fetch('https://api.web3forms.com/submit', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify({
+                access_key: QUOTE_FORM_CONFIG.web3formsAccessKey,
+                subject: 'New Quote Enquiry — ' + data.firstName,
+                from_name: 'BigLeap Website',
+                name: data.firstName,
+                email: data.email,
+                phone: data.mobile,
+                message: data.message,
+                replyto: data.email
+            })
+        });
+
+        let result = {};
+        try {
+            result = await response.json();
+        } catch (_) {
+            throw new Error('Could not connect to email service. Check your internet and try again.');
+        }
+
+        if (!result.success) {
+            throw new Error(result.message || 'Could not send your enquiry. Please try again or call us.');
+        }
+    };
+
+    const submitViaPhpApi = async (data) => {
+        const response = await fetch(QUOTE_FORM_CONFIG.apiEndpoint, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        });
+
+        let result = {};
+        try {
+            result = await response.json();
+        } catch (_) {
+            return false;
+        }
+
+        return response.ok && result.success;
+    };
+
+    const submitToBackend = async (data) => {
+        await Promise.all([
+            submitToGas(data),
+            submitViaWeb3Forms(data)
+        ]);
+    };
+
+    Object.entries(fields).forEach(([name, input]) => {
+        if (!input) return;
+        ensureErrorEl(input);
+        input.addEventListener('blur', () => validateField(name));
+        input.addEventListener('input', () => {
+            if (input.closest('.quote-field')?.classList.contains('is-invalid')) {
+                validateField(name);
+            }
+        });
+    });
+
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        setFormAlert('');
+        if (!validateForm()) return;
+
+        const btn = form.querySelector('.quote-submit');
+        const data = getFormData();
+        btn.classList.add('is-loading');
+        btn.disabled = true;
+
+        try {
+            await submitToBackend(data);
+            window.location.href = QUOTE_FORM_CONFIG.thankYouUrl;
+        } catch (err) {
+            setFormAlert(err.message || 'Something went wrong. Please try again or call us directly.');
+            btn.classList.remove('is-loading');
+            btn.disabled = false;
+        }
+    });
+
+    if (!modal) return;
+
+    const success = document.getElementById('quoteSuccess');
     const open = () => {
         form.hidden = false;
-        success.hidden = true;
+        if (success) success.hidden = true;
         form.reset();
+        Object.values(fields).forEach(clearFieldError);
+        setFormAlert('');
         modal.removeAttribute('hidden');
         modal.setAttribute('aria-hidden', 'false');
         document.body.style.overflow = 'hidden';
-        requestAnimationFrame(() => form.querySelector('input, select, textarea')?.focus());
+        requestAnimationFrame(() => fields.firstName?.focus());
     };
     const close = () => {
         modal.setAttribute('hidden', '');
@@ -351,19 +614,6 @@ function initSlider({ rootId, trackId, dotsId, viewportSel, slidesHtml, perView,
     modal.querySelectorAll('[data-quote-close]').forEach((el) => el.addEventListener('click', close));
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape' && !modal.hasAttribute('hidden')) close();
-    });
-    form.addEventListener('submit', (e) => {
-        e.preventDefault();
-        if (!form.checkValidity()) { form.reportValidity(); return; }
-        const btn = form.querySelector('.quote-submit');
-        btn.classList.add('is-loading');
-        btn.disabled = true;
-        setTimeout(() => {
-            btn.classList.remove('is-loading');
-            btn.disabled = false;
-            form.hidden = true;
-            success.hidden = false;
-        }, 900);
     });
 })();
 
