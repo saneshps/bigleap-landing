@@ -336,7 +336,6 @@ function initSlider({ rootId, trackId, dotsId, viewportSel, slidesHtml, perView,
     const NAME_RE = /^[\p{L}\s'.-]{2,100}$/u;
     const PHONE_DIGITS_MIN = 7;
     const PHONE_DIGITS_MAX = 15;
-    const MESSAGE_MIN = 10;
     const MESSAGE_MAX = 2000;
 
     const validators = {
@@ -365,7 +364,6 @@ function initSlider({ rootId, trackId, dotsId, viewportSel, slidesHtml, perView,
         message(value) {
             const v = value.trim();
             if (!v) return 'Please enter a message.';
-            if (v.length < MESSAGE_MIN) return `Message must be at least ${MESSAGE_MIN} characters.`;
             if (v.length > MESSAGE_MAX) return `Message must be under ${MESSAGE_MAX} characters.`;
             return '';
         }

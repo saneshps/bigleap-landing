@@ -49,10 +49,6 @@ $digits = preg_replace('/\D+/', '', $mobile);
 if ($digits === null || strlen($digits) < 7 || strlen($digits) > 15) {
     $errors[] = 'Please enter a valid mobile number.';
 }
-if ($message === '' || mb_strlen($message) < 10) {
-    $errors[] = 'Message must be at least 10 characters.';
-}
-
 if ($errors) {
     http_response_code(422);
     echo json_encode(['success' => false, 'error' => implode(' ', $errors)]);
