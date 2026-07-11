@@ -2295,6 +2295,12 @@ box-shadow: 0 6px 24px rgb(0 0 0 / 3%);
     min-height: 0;
     max-height: 100%;
 }
+.quote-modal-layout .quote-field-error
+{
+    font-size: 12px;
+    color: red;
+    margin: 4px;
+}
 
 .quote-modal-aside {
     display: none;
